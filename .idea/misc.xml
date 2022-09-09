@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/00 Project/SiAtlet/app/src/main/res/drawable-v24/bg_dialog.xml" value="0.134" />
         <entry key="..\:/00 Project/SiAtlet/app/src/main/res/drawable/bg_button_primary.xml" value="0.134" />
         <entry key="..\:/00 Project/SiAtlet/app/src/main/res/drawable/bg_edit_text.xml" value="0.134" />
         <entry key="..\:/00 Project/SiAtlet/app/src/main/res/drawable/ic_launcher_background.xml" value="0.134" />
         <entry key="..\:/00 Project/SiAtlet/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/00 Project/SiAtlet/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/00 Project/SiAtlet/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/00 Project/SiAtlet/app/src/main/res/layout/layout_loading.xml" value="0.25" />
       </map>
     </option>
   </component>

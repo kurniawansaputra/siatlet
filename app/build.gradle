@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.siatlet"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -47,4 +47,5 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
     implementation "com.orhanobut:hawk:2.0.1"
+    implementation 'com.airbnb.android:lottie:4.2.0'
 }
