@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="120dp"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelTitle"
+            style="@style/TextView.PoppinsBold28spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:text="Selamat Datang"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+        <TextView
+            android:id="@+id/labelUsername"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/username"
+            app:layout_constraintEnd_toEndOf="@+id/labelTitle"
+            app:layout_constraintStart_toStartOf="@+id/labelTitle"
+            app:layout_constraintTop_toBottomOf="@+id/labelTitle" />
+
+        <EditText
+            android:id="@+id/editUsername"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="Masukan username"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/labelUsername"
+            app:layout_constraintStart_toStartOf="@+id/labelUsername"
+            app:layout_constraintTop_toBottomOf="@+id/labelUsername" />
+
+        <TextView
+            android:id="@+id/labelPassword"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Password"
+            app:layout_constraintEnd_toEndOf="@+id/editUsername"
+            app:layout_constraintStart_toStartOf="@+id/editUsername"
+            app:layout_constraintTop_toBottomOf="@+id/editUsername" />
+
+        <EditText
+            android:id="@+id/editPassword"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="Masukan password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/labelPassword"
+            app:layout_constraintStart_toStartOf="@+id/labelPassword"
+            app:layout_constraintTop_toBottomOf="@+id/labelPassword" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            style="@style/Button.Primary"
+            app:layout_constraintEnd_toEndOf="@+id/editPassword"
+            app:layout_constraintStart_toStartOf="@+id/editPassword"
+            app:layout_constraintTop_toBottomOf="@+id/editPassword"
+            android:text="Masuk"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
