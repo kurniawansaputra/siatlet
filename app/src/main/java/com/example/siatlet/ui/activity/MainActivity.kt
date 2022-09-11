@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val user = HawkStorage.instance(this).getUser()
-        val token = user.data?.token
+        val name = user.data?.nama
 
         binding.apply {
-            labelToken.text = token
+            textName.text = "Selamat datang, $name!"
 
             labelLogout.setOnClickListener {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
