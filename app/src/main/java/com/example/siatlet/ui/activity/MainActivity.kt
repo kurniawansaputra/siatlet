@@ -14,11 +14,33 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setDetail()
+        setMenu()
+        setListener()
+
+    }
+
+    private fun setDetail() {
         val user = HawkStorage.instance(this).getUser()
         val name = user.data?.nama
 
         binding.apply {
             textName.text = "Selamat datang, $name!"
+        }
+    }
+
+    private fun setMenu() {
+        binding.apply {
+            containerUser.labelTitle.text = "User"
+        }
+    }
+
+    private fun setListener() {
+        binding.apply {
+            containerUser.cardMenu.setOnClickListener {
+                val intent = Intent(this@MainActivity, UserActivity::class.java)
+                startActivity(intent)
+            }
 
             labelLogout.setOnClickListener {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)

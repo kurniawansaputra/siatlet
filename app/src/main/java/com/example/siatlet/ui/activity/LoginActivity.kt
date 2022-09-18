@@ -26,17 +26,11 @@ class LoginActivity : BaseActivity() {
         setContentView(binding.root)
 
         init()
-        fillForm()
         loginToServer()
     }
 
     private fun init() {
         dialog = DialogUtil()
-    }
-
-    private fun fillForm() {
-        binding.editUsername.setText("nining1")
-        binding.editPassword.setText("123456")
     }
 
     private fun loginToServer() {
@@ -45,7 +39,7 @@ class LoginActivity : BaseActivity() {
             password = binding.editPassword.text.toString().trim()
 
             if (username.isEmpty() || password.isEmpty()) {
-                alert(R.drawable.ic_warning, "Peringatan", "Harap isi username dan password.", R.color.red)
+                alert(R.drawable.ic_warning, "Peringatan", "Harap masukan username atau password.", R.color.red)
             } else {
                 dialog.showProgressDialog(this)
                 val client = ApiConfig.getApiService().login(username, password)
@@ -55,6 +49,7 @@ class LoginActivity : BaseActivity() {
                         val statusCode = response.body()?.meta?.code
 
                         if (response.isSuccessful) {
+                            Log.d("statusCode", statusCode.toString())
                             if (statusCode == "200") {
                                 val user = response.body()
                                 if (user != null) {

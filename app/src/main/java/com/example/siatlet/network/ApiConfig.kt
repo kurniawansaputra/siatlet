@@ -1,6 +1,5 @@
 package com.example.siatlet.network
 
-import com.example.siatlet.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,7 +22,8 @@ class ApiConfig {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2/app_spk/")
+//                .baseUrl("http://10.0.2.2/app_spk/")
+                .baseUrl("http://192.168.43.176/app_spk/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)

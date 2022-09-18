@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">SiAtlet</string>
     <string name="username">Username</string>
+    <string name="content_desc">Content Desc</string>
+    <string name="add">Tambah</string>
+    <string name="level">Level</string>
+    <string name="name">Nama</string>
+    <string name="input_name">Masukan nama</string>
+    <string name="input_username">Masukan username</string>
+    <string name="password">Password</string>
+    <string name="input_password">Masukan password</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="phone">Nomor Handphone</string>
+    <string name="input_phone">Masukan nomor handphone</string>
+    <string name="address">Alamat</string>
+    <string name="input_address">Masukan alamat</string>
 </resources>
