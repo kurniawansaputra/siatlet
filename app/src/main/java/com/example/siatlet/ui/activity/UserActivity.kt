@@ -63,7 +63,7 @@ class UserActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
                         val responseBody = response.body()
-                        val userAdapter = UserAdapter(responseBody?.data as ArrayList<DataItemUser>)
+                        val userAdapter = UserAdapter(responseBody?.data as ArrayList<DataItemUser>, this@UserActivity)
                         binding.rvUser.adapter = userAdapter
                         binding.rvUser.setHasFixedSize(true)
                     }

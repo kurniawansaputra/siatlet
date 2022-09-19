@@ -34,4 +34,11 @@ interface ApiService {
         @Field("alamat") address: String,
         @Field("jenis_kelamin") gender: String
     ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/user/delete")
+    fun deleteUser(
+        @Field("token") token: String,
+        @Field("id_user") idUser: String
+    ): Call<MetaResponse>
 }

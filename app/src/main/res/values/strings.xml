@@ -14,4 +14,6 @@
     <string name="input_phone">Masukan nomor handphone</string>
     <string name="address">Alamat</string>
     <string name="input_address">Masukan alamat</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
 </resources>

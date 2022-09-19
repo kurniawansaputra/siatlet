@@ -126,7 +126,7 @@ class AddUserActivity : BaseActivity() {
             username = binding.editUsername.text.toString().trim()
             password = binding.editPassword.text.toString().trim()
             phone = binding.editPhone.text.toString().trim()
-            address = binding.editAddress.toString()
+            address = binding.editAddress.text.toString()
 
             if (name.isEmpty() || username.isEmpty() || password.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
@@ -162,8 +162,8 @@ class AddUserActivity : BaseActivity() {
 
     private fun goToUser() {
         val intent = Intent(this, UserActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
         finish()
     }
 

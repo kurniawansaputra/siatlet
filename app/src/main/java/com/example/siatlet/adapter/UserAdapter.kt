@@ -1,12 +1,16 @@
 package com.example.siatlet.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.siatlet.R
 import com.example.siatlet.databinding.ItemRowUserBinding
 import com.example.siatlet.model.DataItemUser
+import com.example.siatlet.ui.activity.DetailUserActivity
 
-class UserAdapter(private var userList: List<DataItemUser>): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private var userList: List<DataItemUser>, private val context: Context): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var nameLevel: String
 
     class ViewHolder (val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
@@ -19,7 +23,9 @@ class UserAdapter(private var userList: List<DataItemUser>): RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(userList[position]) {
+                val idUser = idUser
                 val name = nama
+                val gender = jenisKelamin
 
                 when (level) {
                     "1" -> {
@@ -33,9 +39,23 @@ class UserAdapter(private var userList: List<DataItemUser>): RecyclerView.Adapte
                     }
                 }
 
+                when (gender) {
+                    "1" -> {
+                        binding.ivGender.setImageResource(R.drawable.ic_male)
+                    }
+                    "2" -> {
+                        binding.ivGender.setImageResource(R.drawable.ic_female)
+                    }
+                }
+
                 binding.apply {
                     textName.text = name
                     textLevel.text = nameLevel
+                    cardUser.setOnClickListener {
+                        val intent = Intent(context, DetailUserActivity::class.java)
+                        intent.putExtra("id_user", idUser)
+                        context.startActivity(intent)
+                    }
                 }
             }
         }

@@ -21,7 +21,8 @@
             style="@style/TextView.PoppinsMedium14spBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/ivGender"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Bambang Prayoga" />
@@ -31,10 +32,19 @@
             style="@style/TextView.PoppinsRegular14sp8D92A3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textName"
             tools:text="Admin" />
+
+        <ImageView
+            android:id="@+id/ivGender"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_male"
+            app:layout_constraintBottom_toBottomOf="@+id/textLevel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
