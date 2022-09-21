@@ -23,7 +23,7 @@ class ApiConfig {
 
             val retrofit = Retrofit.Builder()
 //                .baseUrl("http://10.0.2.2/app_spk/")
-                .baseUrl("http://10.28.11.29/app_spk/")
+                .baseUrl("http://10.28.11.23/app_spk/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)

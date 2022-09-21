@@ -24,7 +24,7 @@ class AddUserActivity : BaseActivity() {
     private lateinit var phone: String
     private lateinit var address: String
 
-    private val level = arrayOf("Admin", "Pelatih", "Peserta")
+    private val level = arrayOf("Admin", "Pelatih", "Pemilik")
     private val gender = arrayOf("Laki-laki", "Perempuan")
 
     private var nameLevel: String = ""
@@ -71,9 +71,9 @@ class AddUserActivity : BaseActivity() {
 
     private fun setSpLevel() {
         val levelAdapter = ArrayAdapter(this, R.layout.layout_dropdown, level)
-        binding.spLevel.adapter = levelAdapter
+        binding.layoutAddUser.spLevel.adapter = levelAdapter
 
-        binding.spLevel.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+        binding.layoutAddUser.spLevel.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 nameLevel = level[p2]
 
@@ -84,7 +84,7 @@ class AddUserActivity : BaseActivity() {
                     "Pelatih" -> {
                         idLevel = "2"
                     }
-                    "Peserta" -> {
+                    "Pemilik" -> {
                         idLevel = "3"
                     }
                 }
@@ -98,9 +98,9 @@ class AddUserActivity : BaseActivity() {
 
     private fun setSpGender() {
         val genderAdapter = ArrayAdapter(this, R.layout.layout_dropdown, gender)
-        binding.spGender.adapter = genderAdapter
+        binding.layoutAddUser.spGender.adapter = genderAdapter
 
-        binding.spGender.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+        binding.layoutAddUser.spGender.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 nameGender = gender[p2]
 
@@ -121,43 +121,50 @@ class AddUserActivity : BaseActivity() {
     }
 
     private fun setListener() {
-        binding.buttonAdd.setOnClickListener {
-            name = binding.editName.text.toString()
-            username = binding.editUsername.text.toString().trim()
-            password = binding.editPassword.text.toString().trim()
-            phone = binding.editPhone.text.toString().trim()
-            address = binding.editAddress.text.toString()
+        binding.apply {
+            layoutAddUser.buttonAddUpdate.text = getString(R.string.add)
+            layoutAddUser.buttonAddUpdate.setOnClickListener {
+                name = binding.layoutAddUser.editName.text.toString()
+                username = binding.layoutAddUser.editUsername.text.toString().trim()
+                password = binding.layoutAddUser.editPassword.text.toString().trim()
+                phone = binding.layoutAddUser.editPhone.text.toString().trim()
+                address = binding.layoutAddUser.editAddress.text.toString()
 
-            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || phone.isEmpty() || address.isEmpty()) {
-                alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
-            } else {
-                dialog.showProgressDialog(this)
-                val client = ApiConfig.getApiService().addUser(token, username, password, idLevel, name, phone, address, idGender)
-                client.enqueue(object : Callback<MetaResponse> {
-                    override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
-                        dialog.hideDialog()
-                        val statusCode = response.body()?.meta?.code
-                        val message = response.body()?.meta?.message
-
-                        if (response.isSuccessful) {
-                            if (statusCode == "200") {
-                                goToUser()
-                                toast("User berhasil ditambahkan.")
-                            } else {
-                                alert(R.drawable.ic_warning, "Peringatan", "$message", R.color.red)
-                            }
-                        } else {
-                            Log.e(TAG, "onFailure: ${response.message()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<MetaResponse>, t: Throwable) {
-                        dialog.hideDialog()
-                        Log.e(TAG, "onFailure: ${t.message}")
-                    }
-                })
+                if (name.isEmpty() || username.isEmpty() || password.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+                    alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
+                } else {
+                    addUser()
+                }
             }
         }
+    }
+
+    private fun addUser() {
+        dialog.showProgressDialog(this@AddUserActivity)
+        val client = ApiConfig.getApiService().addUser(token, username, password, idLevel, name, phone, address, idGender)
+        client.enqueue(object : Callback<MetaResponse> {
+            override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
+                dialog.hideDialog()
+                val statusCode = response.body()?.meta?.code
+                val message = response.body()?.meta?.message
+
+                if (response.isSuccessful) {
+                    if (statusCode == "200") {
+                        goToUser()
+                        toast("User berhasil ditambahkan.")
+                    } else {
+                        alert(R.drawable.ic_warning, "Peringatan", "$message", R.color.red)
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MetaResponse>, t: Throwable) {
+                dialog.hideDialog()
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
     }
 
     private fun goToUser() {

@@ -1,18 +1,20 @@
 package com.example.siatlet.ui.activity
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import com.example.siatlet.R
-import com.example.siatlet.databinding.ActivityDetailUserBinding
+import com.example.siatlet.databinding.ActivityDetailContestBinding
 import com.example.siatlet.databinding.LayoutDialogBinding
 import com.example.siatlet.hawkstorage.HawkStorage
+import com.example.siatlet.model.ContestByIdResponse
 import com.example.siatlet.model.MetaResponse
 import com.example.siatlet.model.UserByIdResponse
 import com.example.siatlet.network.ApiConfig
@@ -20,31 +22,21 @@ import com.example.siatlet.util.DialogUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
-class DetailUserActivity : BaseActivity() {
-    private lateinit var idUser: String
+class DetailContestActivity : BaseActivity() {
     private lateinit var token: String
+    private lateinit var idContest: String
     private lateinit var name: String
-    private lateinit var username: String
-    private lateinit var phone: String
-    private lateinit var address: String
-
-    private val level = arrayOf("Admin", "Pelatih", "Pemilik")
-    private val gender = arrayOf("Laki-laki", "Perempuan")
-
-    private var nameLevel: String = ""
-    private var idLevel: String = ""
-
-    private var nameGender: String = ""
-    private var idGender: String = ""
+    private lateinit var date: String
 
     private lateinit var dialog: DialogUtil
 
-    private lateinit var binding: ActivityDetailUserBinding
+    private lateinit var binding: ActivityDetailContestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailUserBinding.inflate(layoutInflater)
+        binding = ActivityDetailContestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
@@ -52,8 +44,6 @@ class DetailUserActivity : BaseActivity() {
         setToolbar()
         setListener()
         setDetail()
-        setSpLevel()
-        setSpGender()
     }
 
     private fun init() {
@@ -64,7 +54,7 @@ class DetailUserActivity : BaseActivity() {
         val user = HawkStorage.instance(this).getUser()
         token = user.data?.token.toString()
 
-        idUser = intent.getStringExtra("id_user").toString()
+        idContest = intent.getStringExtra("id_contest").toString()
     }
 
     private fun setToolbar() {
@@ -85,7 +75,7 @@ class DetailUserActivity : BaseActivity() {
                         dialog.dismiss()
                     }
                     buttonYes.setOnClickListener {
-                        deleteUserById()
+                        deleteContestById()
                         dialog.dismiss()
                     }
                 }
@@ -98,14 +88,14 @@ class DetailUserActivity : BaseActivity() {
 
     private fun setListener() {
         binding.apply {
-            layoutUpdateUser.labelPassword.visibility = View.GONE
-            layoutUpdateUser.editPassword.visibility = View.GONE
-            layoutUpdateUser.buttonAddUpdate.text = getString(R.string.update)
-            layoutUpdateUser.buttonAddUpdate.setOnClickListener {
-                name = binding.layoutUpdateUser.editName.text.toString()
-                username = binding.layoutUpdateUser.editUsername.text.toString().trim()
-                phone = binding.layoutUpdateUser.editPhone.text.toString().trim()
-                address = binding.layoutUpdateUser.editAddress.text.toString()
+            layoutUpdateContest.editDate.setOnClickListener {
+                setDate()
+            }
+
+            layoutUpdateContest.buttonAddUpdate.text = getString(R.string.update)
+            layoutUpdateContest.buttonAddUpdate.setOnClickListener {
+                name = binding.layoutUpdateContest.editName.text.toString()
+                date = binding.layoutUpdateContest.editDate.text.toString()
 
                 val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
                 val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
@@ -118,7 +108,7 @@ class DetailUserActivity : BaseActivity() {
                         dialog.dismiss()
                     }
                     buttonYes.setOnClickListener {
-                        updateUser()
+                        updateContest()
                         dialog.dismiss()
                     }
                 }
@@ -129,100 +119,37 @@ class DetailUserActivity : BaseActivity() {
         }
     }
 
-    private fun setDetail() {
-        setLoading(true)
-        val client = ApiConfig.getApiService().getUserById(token, idUser)
-        client.enqueue(object : Callback<UserByIdResponse> {
-            override fun onResponse(call: Call<UserByIdResponse>, response: Response<UserByIdResponse>) {
-                setLoading(false)
+    private fun deleteContestById() {
+        dialog.showProgressDialog(this)
+        val client = ApiConfig.getApiService().deleteContest(token, idContest)
+        client.enqueue(object : Callback<MetaResponse> {
+            override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
+                dialog.hideDialog()
                 val statusCode = response.body()?.meta?.code
-                val responseBody = response.body()?.data
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        idLevel = responseBody?.level.toString()
-                        name = responseBody?.nama.toString()
-                        username = responseBody?.username.toString()
-                        idGender = responseBody?.jenisKelamin.toString()
-                        phone = responseBody?.noHp.toString()
-                        address = responseBody?.alamat.toString()
-
-                        binding.apply {
-                            layoutUpdateUser.editName.setText(name)
-                            layoutUpdateUser.editUsername.setText(username)
-                            layoutUpdateUser.editPhone.setText(phone)
-                            layoutUpdateUser.editAddress.setText(address)
-                        }
+                        goToContest()
+                        toast("Lomba berhasil dihapus.")
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<UserByIdResponse>, t: Throwable) {
-                setLoading(false)
+            override fun onFailure(call: Call<MetaResponse>, t: Throwable) {
+                dialog.hideDialog()
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }
 
-    private fun setSpLevel() {
-        val levelAdapter = ArrayAdapter(this, R.layout.layout_dropdown, level)
-        binding.layoutUpdateUser.spLevel.adapter = levelAdapter
-
-        binding.layoutUpdateUser.spLevel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                nameLevel = level[p2]
-
-                when (nameLevel) {
-                    "Admin" -> {
-                        idLevel = "1"
-                    }
-                    "Pelatih" -> {
-                        idLevel = "2"
-                    }
-                    "Pemilik" -> {
-                        idLevel = "3"
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }
-
-    private fun setSpGender() {
-        val genderAdapter = ArrayAdapter(this, R.layout.layout_dropdown, gender)
-        binding.layoutUpdateUser.spGender.adapter = genderAdapter
-
-        binding.layoutUpdateUser.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                nameGender = gender[p2]
-
-                when (nameGender) {
-                    "Laki-laki" -> {
-                        idGender = "1"
-                    }
-                    "Perempuan" -> {
-                        idGender = "2"
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }
-
-    private fun updateUser() {
-        if (name.isEmpty() || username.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+    private fun updateContest() {
+        if (name.isEmpty() || date.isEmpty()) {
             alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
         } else {
             dialog.showProgressDialog(this)
-            val client = ApiConfig.getApiService().updateUser(token, idUser, username, idLevel, name, phone, address, idGender)
+            val client = ApiConfig.getApiService().updateContest(token, idContest, name, date)
             client.enqueue(object : Callback<MetaResponse> {
                 override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                     dialog.hideDialog()
@@ -230,8 +157,8 @@ class DetailUserActivity : BaseActivity() {
 
                     if (response.isSuccessful) {
                         if (statusCode == "200") {
-                            goToUser()
-                            toast("User berhasil diupdate.")
+                            goToContest()
+                            toast("Lomba berhasil diupdate.")
                         }
                     } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
@@ -246,26 +173,32 @@ class DetailUserActivity : BaseActivity() {
         }
     }
 
-    private fun deleteUserById() {
-        dialog.showProgressDialog(this)
-        val client = ApiConfig.getApiService().deleteUser(token, idUser)
-        client.enqueue(object : Callback<MetaResponse> {
-            override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
-                dialog.hideDialog()
+    private fun setDetail() {
+        setLoading(true)
+        val client = ApiConfig.getApiService().getContestById(token, idContest)
+        client.enqueue(object : Callback<ContestByIdResponse> {
+            override fun onResponse(call: Call<ContestByIdResponse>, response: Response<ContestByIdResponse>) {
+                setLoading(false)
                 val statusCode = response.body()?.meta?.code
+                val responseBody = response.body()?.data
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        goToUser()
-                        toast("User berhasil dihapus.")
+                        name = responseBody?.namaLomba.toString()
+                        date = responseBody?.waktuLomba.toString()
+
+                        binding.apply {
+                            layoutUpdateContest.editName.setText(name)
+                            layoutUpdateContest.editDate.setText(date)
+                        }
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<MetaResponse>, t: Throwable) {
-                dialog.hideDialog()
+            override fun onFailure(call: Call<ContestByIdResponse>, t: Throwable) {
+                setLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
@@ -281,13 +214,25 @@ class DetailUserActivity : BaseActivity() {
         }
     }
 
-    private fun goToUser() {
-        val intent = Intent(this, UserActivity::class.java)
+    private fun goToContest() {
+        val intent = Intent(this, ContestActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }
+
+    private fun setDate() {
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(this, { _: DatePicker, i: Int, i1: Int, i2: Int ->
+            binding.layoutUpdateContest.editDate.setText("$i-${i1 + 1}-$i2")
+        }, year, month, day).show()
+    }
+
     companion object {
-        const val TAG = "DetailUser"
+        const val TAG = "DetailContest"
     }
 }

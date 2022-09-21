@@ -3,6 +3,7 @@ package com.example.siatlet.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
@@ -26,16 +27,20 @@ class UserAdapter(private var userList: List<DataItemUser>, private val context:
                 val idUser = idUser
                 val name = nama
                 val gender = jenisKelamin
+                val username = username
 
                 when (level) {
                     "1" -> {
                         nameLevel = "Admin"
+                        binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.green))
                     }
                     "2" -> {
                         nameLevel = "Pelatih"
+                        binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.purple))
                     }
                     "3" -> {
-                        nameLevel = "Peserta"
+                        nameLevel = "Pemilik"
+                        binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.blue))
                     }
                 }
 
@@ -50,6 +55,7 @@ class UserAdapter(private var userList: List<DataItemUser>, private val context:
 
                 binding.apply {
                     textName.text = name
+                    textUsername.text = username
                     textLevel.text = nameLevel
                     cardUser.setOnClickListener {
                         val intent = Intent(context, DetailUserActivity::class.java)

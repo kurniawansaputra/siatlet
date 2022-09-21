@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardUser"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:paddingTop="16dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+    <TextView
+        android:id="@+id/textName"
+        style="@style/TextView.PoppinsMedium14spBlack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toEndOf="@+id/ivGender"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bambang Prayoga" />
 
-        <TextView
-            android:id="@+id/textName"
-            style="@style/TextView.PoppinsMedium14spBlack"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/ivGender"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Bambang Prayoga" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/green"
+        app:layout_constraintBottom_toBottomOf="@+id/textUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textName">
 
         <TextView
             android:id="@+id/textLevel"
-            style="@style/TextView.PoppinsRegular14sp8D92A3"
-            android:layout_width="0dp"
+            style="@style/TextView.PoppinsRegular12spGreen"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/textName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textName"
+            android:padding="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textName"
             tools:text="Admin" />
 
-        <ImageView
-            android:id="@+id/ivGender"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_male"
-            app:layout_constraintBottom_toBottomOf="@+id/textLevel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textName" />
+    </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textUsername"
+        style="@style/TextView.PoppinsRegular14sp8D92A3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/textName"
+        app:layout_constraintTop_toBottomOf="@+id/textName"
+        tools:text="bambang2" />
+
+    <ImageView
+        android:id="@+id/ivGender"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_female"
+        app:layout_constraintBottom_toBottomOf="@+id/textUsername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textName" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textUsername" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

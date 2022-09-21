@@ -60,35 +60,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/containerContest"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+        <include
+            android:id="@+id/containerParticipant"
+            layout="@layout/layout_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/containerUser"
+            app:layout_constraintStart_toStartOf="@+id/containerUser"
+            app:layout_constraintTop_toBottomOf="@+id/containerUser" />
 
         <include
             android:id="@+id/containerContest"
             layout="@layout/layout_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/containerCriteria"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/containerUser"
-            app:layout_constraintTop_toTopOf="@+id/containerUser" />
-
-        <include
-            android:id="@+id/containerCriteria"
-            layout="@layout/layout_menu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/containerContest"
-            app:layout_constraintTop_toTopOf="@+id/containerContest" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/containerUser"
+            app:layout_constraintStart_toStartOf="@+id/containerUser"
+            app:layout_constraintTop_toBottomOf="@+id/containerParticipant" />
 
         <TextView
             android:id="@+id/labelLogout"

@@ -16,4 +16,9 @@
     <string name="input_address">Masukan alamat</string>
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>
+    <string name="update">Update</string>
+    <string name="title_delete">Hapus Data</string>
+    <string name="message_delete">Apakah anda yakin ingin menghapus data ini?</string>
+    <string name="title_update">Update Data</string>
+    <string name="message_update">Apakah anda yakin ingin mengubah data ini?</string>
 </resources>

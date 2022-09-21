@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardMenu"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,23 +14,23 @@
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:src="@drawable/ic_user"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_participation"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/labelTitle"
+            style="@style/TextView.PoppinsMedium14spBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:text="User"
-            style="@style/TextView.PoppinsMedium12spBlack"
-            app:layout_constraintEnd_toEndOf="@+id/ivIcon"
-            app:layout_constraintStart_toStartOf="@+id/ivIcon"
-            app:layout_constraintTop_toBottomOf="@+id/ivIcon" />
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+            app:layout_constraintStart_toEndOf="@+id/ivIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            tools:text="User" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

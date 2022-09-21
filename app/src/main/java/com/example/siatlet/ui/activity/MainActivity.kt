@@ -3,6 +3,7 @@ package com.example.siatlet.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.siatlet.R
 import com.example.siatlet.databinding.ActivityMainBinding
 import com.example.siatlet.hawkstorage.HawkStorage
 
@@ -32,6 +33,13 @@ class MainActivity : AppCompatActivity() {
     private fun setMenu() {
         binding.apply {
             containerUser.labelTitle.text = "User"
+            containerUser.ivIcon.setImageResource(R.drawable.ic_user)
+
+            containerParticipant.labelTitle.text = "Peserta"
+            containerParticipant.ivIcon.setImageResource(R.drawable.ic_participation)
+
+            containerContest.labelTitle.text = "Lomba"
+            containerContest.ivIcon.setImageResource(R.drawable.ic_contest)
         }
     }
 
@@ -39,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             containerUser.cardMenu.setOnClickListener {
                 val intent = Intent(this@MainActivity, UserActivity::class.java)
+                startActivity(intent)
+            }
+
+            containerContest.cardMenu.setOnClickListener {
+                val intent = Intent(this@MainActivity, ContestActivity::class.java)
                 startActivity(intent)
             }
 
