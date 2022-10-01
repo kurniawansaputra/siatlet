@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.databinding.ItemRowContestBinding
 import com.example.siatlet.model.DataContest
 import com.example.siatlet.ui.activity.DetailContestActivity
-import com.example.siatlet.ui.activity.DetailUserActivity
 
 class ContestAdapter(private var contestList: List<DataContest>, private val context: Context): RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowContestBinding) : RecyclerView.ViewHolder(binding.root)
@@ -22,12 +21,14 @@ class ContestAdapter(private var contestList: List<DataContest>, private val con
         with(holder) {
             with(contestList[position]) {
                 val name = namaLomba
-                val time = waktuLomba
+                val date = waktuLomba
                 val idContest = idLomba
+                val trainer = idPelatih
 
                 binding.apply {
                     textName.text = name
-                    textTime.text = time
+                    textTrainer.text = trainer
+                    textDate.text = date
 
                     cardContest.setOnClickListener {
                         val intent = Intent(context, DetailContestActivity::class.java)

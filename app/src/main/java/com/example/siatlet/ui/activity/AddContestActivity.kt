@@ -4,11 +4,14 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import com.example.siatlet.R
 import com.example.siatlet.databinding.ActivityAddContestBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.MetaResponse
+import com.example.siatlet.model.*
 import com.example.siatlet.network.ApiConfig
 import com.example.siatlet.util.DialogUtil
 import retrofit2.Call
@@ -21,6 +24,10 @@ class AddContestActivity : BaseActivity() {
     private lateinit var token: String
     private lateinit var name: String
     private lateinit var date: String
+    private var level: String = "pelatih"
+
+    private var idTrainer: String = ""
+    private var nameTrainer: String = ""
 
     private lateinit var dialog: DialogUtil
 
@@ -34,7 +41,48 @@ class AddContestActivity : BaseActivity() {
         init()
         setPref()
         setToolbar()
+        setSpTrainer()
         setListener()
+    }
+
+    private fun setSpTrainer() {
+        val client = ApiConfig.getApiService().getUserByLevel(level)
+        client.enqueue(object : Callback<UserByLevelResponse> {
+            override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
+                val statusCode = response.body()?.meta?.code
+                val message = response.body()?.meta?.message
+
+                if (response.isSuccessful) {
+                    if (statusCode == "200") {
+                        val userByLevel: List<DataUserByLevel> = response.body()!!.data as List<DataUserByLevel>
+                        val nameList: MutableList<String> = ArrayList()
+
+                        for (i in userByLevel.indices) {
+                            nameList.add(
+                                userByLevel[i].nama.toString()
+                            )
+                        }
+                        val trainerAdapter = ArrayAdapter(this@AddContestActivity, R.layout.layout_dropdown, nameList)
+                        binding.layoutAddContest.spTrainer.adapter = trainerAdapter
+
+                        binding.layoutAddContest.spTrainer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+                                idTrainer = userByLevel[position].idUser.toString()
+                                nameTrainer = userByLevel[position].nama.toString()
+                            }
+
+                            override fun onNothingSelected(adapterView: AdapterView<*>) {}
+                        }
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserByLevelResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
     }
 
     private fun init() {
@@ -78,7 +126,7 @@ class AddContestActivity : BaseActivity() {
 
     private fun addContest() {
         dialog.showProgressDialog(this)
-        val client = ApiConfig.getApiService().addContest(token, name, date)
+        val client = ApiConfig.getApiService().addContest(token, name, date, idTrainer)
         client.enqueue(object : Callback<MetaResponse> {
             override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                 dialog.hideDialog()

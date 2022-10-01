@@ -2,16 +2,16 @@ package com.example.siatlet.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserResponse(
+data class UserByLevelResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataUser?>? = null,
+	val data: List<DataUserByLevel?>? = null,
 
 	@field:SerializedName("meta")
 	val meta: Meta? = null
 )
 
-data class DataUser(
+data class DataUserByLevel(
 
 	@field:SerializedName("password_encrypt")
 	val passwordEncrypt: String? = null,
@@ -20,7 +20,7 @@ data class DataUser(
 	val nama: String? = null,
 
 	@field:SerializedName("updated_at")
-	val updatedAt: String? = null,
+	val updatedAt: Any? = null,
 
 	@field:SerializedName("level")
 	val level: String? = null,

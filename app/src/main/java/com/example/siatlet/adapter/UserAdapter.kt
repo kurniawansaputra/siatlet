@@ -3,15 +3,14 @@ package com.example.siatlet.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
 import com.example.siatlet.databinding.ItemRowUserBinding
-import com.example.siatlet.model.DataItemUser
+import com.example.siatlet.model.DataUser
 import com.example.siatlet.ui.activity.DetailUserActivity
 
-class UserAdapter(private var userList: List<DataItemUser>, private val context: Context): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private var userList: List<DataUser>, private val context: Context): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var nameLevel: String
 
     class ViewHolder (val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
@@ -26,30 +25,20 @@ class UserAdapter(private var userList: List<DataItemUser>, private val context:
             with(userList[position]) {
                 val idUser = idUser
                 val name = nama
-                val gender = jenisKelamin
                 val username = username
 
                 when (level) {
-                    "1" -> {
+                    "admin" -> {
                         nameLevel = "Admin"
                         binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.green))
                     }
-                    "2" -> {
+                    "pelatih" -> {
                         nameLevel = "Pelatih"
                         binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.purple))
                     }
-                    "3" -> {
+                    "pemilik" -> {
                         nameLevel = "Pemilik"
                         binding.cardLevel.setCardBackgroundColor(context.getColor(R.color.blue))
-                    }
-                }
-
-                when (gender) {
-                    "1" -> {
-                        binding.ivGender.setImageResource(R.drawable.ic_male)
-                    }
-                    "2" -> {
-                        binding.ivGender.setImageResource(R.drawable.ic_female)
                     }
                 }
 

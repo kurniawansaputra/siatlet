@@ -1,6 +1,7 @@
 package com.example.siatlet.model
 
 import com.google.gson.annotations.SerializedName
+import retrofit2.http.Field
 
 data class ContestResponse(
 
@@ -24,6 +25,9 @@ data class DataContest(
 
 	@field:SerializedName("nama_lomba")
 	val namaLomba: String? = null,
+
+	@field:SerializedName("id_pelatih")
+	val idPelatih: String? = null,
 
 	@field:SerializedName("id_user")
 	val idUser: String? = null,

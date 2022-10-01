@@ -12,6 +12,7 @@ interface ApiService {
     fun login (
         @Field("username") username: String,
         @Field("password") password: String,
+        @Field("level") level: String
     ): Call<LoginResponse>
 
     @FormUrlEncoded
@@ -23,14 +24,9 @@ interface ApiService {
     @FormUrlEncoded
     @POST("api/user/add")
     fun addUser (
-        @Field("token") token: String,
         @Field("username") username: String,
-        @Field("password") password: String,
         @Field("level") level: String,
         @Field("nama") name: String,
-        @Field("no_hp") phone: String,
-        @Field("alamat") address: String,
-        @Field("jenis_kelamin") gender: String
     ): Call<MetaResponse>
 
     @FormUrlEncoded
@@ -55,10 +51,13 @@ interface ApiService {
         @Field("username") username: String,
         @Field("level") level: String,
         @Field("nama") name: String,
-        @Field("no_hp") phone: String,
-        @Field("alamat") address: String,
-        @Field("jenis_kelamin") gender: String
     ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/user/get_by_level")
+    fun getUserByLevel(
+        @Field("level") level: String,
+    ): Call<UserByLevelResponse>
 
     @FormUrlEncoded
     @POST("api/lomba/get_all")
@@ -71,7 +70,8 @@ interface ApiService {
     fun addContest (
         @Field("token") token: String,
         @Field("nama_lomba") name: String,
-        @Field("waktu_lomba") date: String
+        @Field("waktu_lomba") date: String,
+        @Field("id_pelatih") idTrainer: String
     ): Call<MetaResponse>
 
     @FormUrlEncoded
@@ -94,6 +94,19 @@ interface ApiService {
         @Field("token") token: String,
         @Field("id_lomba") idContest: String,
         @Field("nama_lomba") name: String,
-        @Field("waktu_lomba") date: String
+        @Field("waktu_lomba") date: String,
+        @Field("id_pelatih") idTrainer: String
     ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/kriteria/get_all")
+    fun getAllCriteria (
+        @Field("token") token: String,
+    ): Call<CriteriaResponse>
+
+    @FormUrlEncoded
+    @POST("api/peserta/get_all")
+    fun getAllParticipant (
+        @Field("token") token: String,
+    ): Call<ParticipantResponse>
 }

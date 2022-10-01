@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.siatlet.adapter.UserAdapter
 import com.example.siatlet.databinding.ActivityUserBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.DataItemUser
+import com.example.siatlet.model.DataUser
 import com.example.siatlet.model.UserResponse
 import com.example.siatlet.network.ApiConfig
 import retrofit2.Call
@@ -63,7 +63,7 @@ class UserActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
                         val responseBody = response.body()
-                        val userAdapter = UserAdapter(responseBody?.data as ArrayList<DataItemUser>, this@UserActivity)
+                        val userAdapter = UserAdapter(responseBody?.data as ArrayList<DataUser>, this@UserActivity)
                         binding.rvUser.adapter = userAdapter
                         binding.rvUser.setHasFixedSize(true)
                     }

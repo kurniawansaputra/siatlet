@@ -4,10 +4,11 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import com.example.siatlet.R
@@ -15,8 +16,9 @@ import com.example.siatlet.databinding.ActivityDetailContestBinding
 import com.example.siatlet.databinding.LayoutDialogBinding
 import com.example.siatlet.hawkstorage.HawkStorage
 import com.example.siatlet.model.ContestByIdResponse
+import com.example.siatlet.model.DataUserByLevel
 import com.example.siatlet.model.MetaResponse
-import com.example.siatlet.model.UserByIdResponse
+import com.example.siatlet.model.UserByLevelResponse
 import com.example.siatlet.network.ApiConfig
 import com.example.siatlet.util.DialogUtil
 import retrofit2.Call
@@ -29,6 +31,11 @@ class DetailContestActivity : BaseActivity() {
     private lateinit var idContest: String
     private lateinit var name: String
     private lateinit var date: String
+    private lateinit var trainer: String
+    private val level = "pelatih"
+
+    private var idTrainer: String = ""
+    private var nameTrainer: String = ""
 
     private lateinit var dialog: DialogUtil
 
@@ -41,6 +48,7 @@ class DetailContestActivity : BaseActivity() {
 
         init()
         setPref()
+        setSpTrainer()
         setToolbar()
         setListener()
         setDetail()
@@ -149,7 +157,7 @@ class DetailContestActivity : BaseActivity() {
             alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
         } else {
             dialog.showProgressDialog(this)
-            val client = ApiConfig.getApiService().updateContest(token, idContest, name, date)
+            val client = ApiConfig.getApiService().updateContest(token, idContest, name, date, idTrainer)
             client.enqueue(object : Callback<MetaResponse> {
                 override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                     dialog.hideDialog()
@@ -186,10 +194,12 @@ class DetailContestActivity : BaseActivity() {
                     if (statusCode == "200") {
                         name = responseBody?.namaLomba.toString()
                         date = responseBody?.waktuLomba.toString()
+                        trainer = responseBody?.idPelatih.toString()
 
                         binding.apply {
                             layoutUpdateContest.editName.setText(name)
                             layoutUpdateContest.editDate.setText(date)
+                            layoutUpdateContest.spTrainer.id = trainer.toInt()
                         }
                     }
                 } else {
@@ -200,6 +210,46 @@ class DetailContestActivity : BaseActivity() {
             override fun onFailure(call: Call<ContestByIdResponse>, t: Throwable) {
                 setLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
+
+    private fun setSpTrainer() {
+        val client = ApiConfig.getApiService().getUserByLevel(level)
+        client.enqueue(object : Callback<UserByLevelResponse> {
+            override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
+                val statusCode = response.body()?.meta?.code
+                val message = response.body()?.meta?.message
+
+                if (response.isSuccessful) {
+                    if (statusCode == "200") {
+                        val userByLevel: List<DataUserByLevel> = response.body()!!.data as List<DataUserByLevel>
+                        val nameList: MutableList<String> = ArrayList()
+
+                        for (i in userByLevel.indices) {
+                            nameList.add(
+                                userByLevel[i].nama.toString()
+                            )
+                        }
+                        val trainerAdapter = ArrayAdapter(this@DetailContestActivity, R.layout.layout_dropdown, nameList)
+                        binding.layoutUpdateContest.spTrainer.adapter = trainerAdapter
+
+                        binding.layoutUpdateContest.spTrainer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+                                idTrainer = userByLevel[position].idUser.toString()
+                                nameTrainer = userByLevel[position].nama.toString()
+                            }
+
+                            override fun onNothingSelected(adapterView: AdapterView<*>) {}
+                        }
+                    }
+                } else {
+                    Log.e(AddContestActivity.TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserByLevelResponse>, t: Throwable) {
+                Log.e(AddContestActivity.TAG, "onFailure: ${t.message}")
             }
         })
     }

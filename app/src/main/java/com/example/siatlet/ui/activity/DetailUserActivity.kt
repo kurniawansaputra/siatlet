@@ -26,17 +26,13 @@ class DetailUserActivity : BaseActivity() {
     private lateinit var token: String
     private lateinit var name: String
     private lateinit var username: String
-    private lateinit var phone: String
-    private lateinit var address: String
 
-    private val level = arrayOf("Admin", "Pelatih", "Pemilik")
-    private val gender = arrayOf("Laki-laki", "Perempuan")
+    private val levelList = arrayOf("admin", "pelatih", "pemilik")
+//    private val gender = arrayOf("Laki-laki", "Perempuan")
+    private var level: String = ""
 
-    private var nameLevel: String = ""
-    private var idLevel: String = ""
-
-    private var nameGender: String = ""
-    private var idGender: String = ""
+//    private var nameGender: String = ""
+//    private var idGender: String = ""
 
     private lateinit var dialog: DialogUtil
 
@@ -53,7 +49,6 @@ class DetailUserActivity : BaseActivity() {
         setListener()
         setDetail()
         setSpLevel()
-        setSpGender()
     }
 
     private fun init() {
@@ -98,14 +93,10 @@ class DetailUserActivity : BaseActivity() {
 
     private fun setListener() {
         binding.apply {
-            layoutUpdateUser.labelPassword.visibility = View.GONE
-            layoutUpdateUser.editPassword.visibility = View.GONE
             layoutUpdateUser.buttonAddUpdate.text = getString(R.string.update)
             layoutUpdateUser.buttonAddUpdate.setOnClickListener {
                 name = binding.layoutUpdateUser.editName.text.toString()
                 username = binding.layoutUpdateUser.editUsername.text.toString().trim()
-                phone = binding.layoutUpdateUser.editPhone.text.toString().trim()
-                address = binding.layoutUpdateUser.editAddress.text.toString()
 
                 val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
                 val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
@@ -140,18 +131,13 @@ class DetailUserActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        idLevel = responseBody?.level.toString()
+//                        level = responseBody?.level.toString()
                         name = responseBody?.nama.toString()
                         username = responseBody?.username.toString()
-                        idGender = responseBody?.jenisKelamin.toString()
-                        phone = responseBody?.noHp.toString()
-                        address = responseBody?.alamat.toString()
 
                         binding.apply {
                             layoutUpdateUser.editName.setText(name)
                             layoutUpdateUser.editUsername.setText(username)
-                            layoutUpdateUser.editPhone.setText(phone)
-                            layoutUpdateUser.editAddress.setText(address)
                         }
                     }
                 } else {
@@ -167,25 +153,12 @@ class DetailUserActivity : BaseActivity() {
     }
 
     private fun setSpLevel() {
-        val levelAdapter = ArrayAdapter(this, R.layout.layout_dropdown, level)
+        val levelAdapter = ArrayAdapter(this, R.layout.layout_dropdown, levelList)
         binding.layoutUpdateUser.spLevel.adapter = levelAdapter
 
         binding.layoutUpdateUser.spLevel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                nameLevel = level[p2]
-
-                when (nameLevel) {
-                    "Admin" -> {
-                        idLevel = "1"
-                    }
-                    "Pelatih" -> {
-                        idLevel = "2"
-                    }
-                    "Pemilik" -> {
-                        idLevel = "3"
-                    }
-                }
-
+                level = levelList[p2]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -193,36 +166,36 @@ class DetailUserActivity : BaseActivity() {
         }
     }
 
-    private fun setSpGender() {
-        val genderAdapter = ArrayAdapter(this, R.layout.layout_dropdown, gender)
-        binding.layoutUpdateUser.spGender.adapter = genderAdapter
-
-        binding.layoutUpdateUser.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                nameGender = gender[p2]
-
-                when (nameGender) {
-                    "Laki-laki" -> {
-                        idGender = "1"
-                    }
-                    "Perempuan" -> {
-                        idGender = "2"
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }
+//    private fun setSpGender() {
+//        val genderAdapter = ArrayAdapter(this, R.layout.layout_dropdown, gender)
+//        binding.layoutUpdateUser.spGender.adapter = genderAdapter
+//
+//        binding.layoutUpdateUser.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                nameGender = gender[p2]
+//
+//                when (nameGender) {
+//                    "Laki-laki" -> {
+//                        idGender = "1"
+//                    }
+//                    "Perempuan" -> {
+//                        idGender = "2"
+//                    }
+//                }
+//
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//            }
+//        }
+//    }
 
     private fun updateUser() {
-        if (name.isEmpty() || username.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+        if (name.isEmpty() || username.isEmpty()) {
             alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
         } else {
             dialog.showProgressDialog(this)
-            val client = ApiConfig.getApiService().updateUser(token, idUser, username, idLevel, name, phone, address, idGender)
+            val client = ApiConfig.getApiService().updateUser(token, idUser, username, level, name)
             client.enqueue(object : Callback<MetaResponse> {
                 override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                     dialog.hideDialog()

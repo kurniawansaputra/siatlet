@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ContestActivity">
+    tools:context=".ui.activity.ParticipantActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:navigationIcon="@drawable/ic_back"
-            app:title="Daftar Lomba"
+            app:title="Daftar Peserta"
             app:titleTextAppearance="@style/TextView.PoppinsMedium18spBlack"
             app:titleTextColor="@color/black" />
 
@@ -40,7 +40,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvContest"
+                android:id="@+id/rvParticipant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
@@ -52,7 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/item_row_contest" />
+                tools:listitem="@layout/item_row_participant" />
 
             <ProgressBar
                 android:id="@+id/progressCircular"
@@ -68,7 +68,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddContest"
+        android:id="@+id/fabAddParticipant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
