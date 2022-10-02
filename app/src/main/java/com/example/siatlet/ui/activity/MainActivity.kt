@@ -30,14 +30,24 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             textName.text = "Selamat datang, $name!"
 
-            if (level == "admin") {
-                containerParticipant.cardMenu.visibility = View.GONE
-                containerCriteriaValue.cardMenu.visibility = View.GONE
-                containerScore.cardMenu.visibility = View.GONE
-            } else if (level == "pelatih") {
-                containerUser.cardMenu.visibility = View.GONE
-                containerContest.cardMenu.visibility = View.GONE
-                containerCriteria.cardMenu.visibility = View.GONE
+            when (level) {
+                "admin" -> {
+                    containerParticipant.cardMenu.visibility = View.GONE
+                    containerCriteriaValue.cardMenu.visibility = View.GONE
+                    containerScore.cardMenu.visibility = View.GONE
+                }
+                "pelatih" -> {
+                    containerUser.cardMenu.visibility = View.GONE
+                    containerContest.cardMenu.visibility = View.GONE
+                    containerCriteria.cardMenu.visibility = View.GONE
+                }
+                "pemilik" -> {
+                    containerCriteriaValue.cardMenu.visibility = View.GONE
+                    containerScore.cardMenu.visibility = View.GONE
+                    containerUser.cardMenu.visibility = View.GONE
+                    containerContest.cardMenu.visibility = View.GONE
+                    containerCriteria.cardMenu.visibility = View.GONE
+                }
             }
         }
     }

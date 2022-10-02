@@ -16,6 +16,7 @@ import retrofit2.Response
 
 class ParticipantActivity : AppCompatActivity() {
     private lateinit var token: String
+    private lateinit var level: String
 
     private lateinit var binding: ActivityParticipantBinding
 
@@ -33,6 +34,7 @@ class ParticipantActivity : AppCompatActivity() {
     private fun setPref() {
         val user = HawkStorage.instance(this).getUser()
         token = user.data?.token.toString()
+        level = user.data?.level.toString()
     }
 
     private fun setToolbar() {
@@ -45,7 +47,11 @@ class ParticipantActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.apply {
-
+            if (level == "pelatih") {
+                fabAddParticipant.visibility = View.VISIBLE
+            } else {
+                fabAddParticipant.visibility = View.GONE
+            }
         }
     }
 

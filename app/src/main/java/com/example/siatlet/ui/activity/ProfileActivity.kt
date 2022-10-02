@@ -62,6 +62,11 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.apply {
+            buttonChangePassword.setOnClickListener {
+                val intent = Intent(this@ProfileActivity, ChangePasswordActivity::class.java)
+                startActivity(intent)
+            }
+
             buttonLogout.setOnClickListener {
                 val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
                 val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
@@ -91,6 +96,5 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
         HawkStorage.instance(this).deleteAll()
         finish()
-
     }
 }

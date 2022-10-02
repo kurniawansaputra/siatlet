@@ -54,6 +54,15 @@ interface ApiService {
     ): Call<MetaResponse>
 
     @FormUrlEncoded
+    @POST("api/user/change_password")
+    fun changePassword (
+        @Field("id_user") idUser: String,
+        @Field("level") level: String,
+        @Field("password_baru") newPassword: String,
+        @Field("token") token: String,
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
     @POST("api/user/get_by_level")
     fun getUserByLevel(
         @Field("level") level: String,
