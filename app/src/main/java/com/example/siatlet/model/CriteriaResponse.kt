@@ -25,6 +25,9 @@ data class DataCriteria(
 	@field:SerializedName("id_lomba")
 	val idLomba: String? = null,
 
+	@field:SerializedName("nama_lomba")
+	val namaLomba: String? = null,
+
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 

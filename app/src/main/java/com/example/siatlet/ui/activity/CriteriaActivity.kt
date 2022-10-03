@@ -1,16 +1,14 @@
 package com.example.siatlet.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.siatlet.adapter.ContestAdapter
 import com.example.siatlet.adapter.CriteriaAdapter
 import com.example.siatlet.databinding.ActivityCriteriaBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.ContestResponse
 import com.example.siatlet.model.CriteriaResponse
-import com.example.siatlet.model.DataContest
 import com.example.siatlet.model.DataCriteria
 import com.example.siatlet.network.ApiConfig
 import retrofit2.Call
@@ -48,7 +46,10 @@ class CriteriaActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.apply {
-
+            fabAddCriteria.setOnClickListener {
+                val intent = Intent(this@CriteriaActivity, AddCriteriaActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

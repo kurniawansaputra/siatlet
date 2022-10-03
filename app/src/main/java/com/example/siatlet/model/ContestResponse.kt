@@ -29,6 +29,9 @@ data class DataContest(
 	@field:SerializedName("id_pelatih")
 	val idPelatih: String? = null,
 
+	@field:SerializedName("nama_pelatih")
+	val namaPelatih: String? = null,
+
 	@field:SerializedName("id_user")
 	val idUser: String? = null,
 

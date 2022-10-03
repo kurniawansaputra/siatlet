@@ -23,7 +23,7 @@ class ContestAdapter(private var contestList: List<DataContest>, private val con
                 val name = namaLomba
                 val date = waktuLomba
                 val idContest = idLomba
-                val trainer = idPelatih
+                val trainer = namaPelatih
 
                 binding.apply {
                     textName.text = name

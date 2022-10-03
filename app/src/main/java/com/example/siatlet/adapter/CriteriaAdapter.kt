@@ -21,7 +21,7 @@ class CriteriaAdapter(private var criteriaList: List<DataCriteria>, private val 
             with(criteriaList[position]) {
                 val name = namaKriteria
                 val property = sifat
-                val contest = idLomba
+                val contest = namaLomba
 
                 when (property) {
                     "Benefit" -> {

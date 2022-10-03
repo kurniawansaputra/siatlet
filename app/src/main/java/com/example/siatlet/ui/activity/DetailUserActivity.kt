@@ -31,9 +31,6 @@ class DetailUserActivity : BaseActivity() {
 //    private val gender = arrayOf("Laki-laki", "Perempuan")
     private var level: String = ""
 
-//    private var nameGender: String = ""
-//    private var idGender: String = ""
-
     private lateinit var dialog: DialogUtil
 
     private lateinit var binding: ActivityDetailUserBinding
@@ -117,6 +114,27 @@ class DetailUserActivity : BaseActivity() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             }
+
+            buttonResetPassword.setOnClickListener {
+                val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
+                builder.setView(binding.root)
+                val dialog: AlertDialog = builder.create()
+                binding.apply {
+                    labelTitle.text = "Reset Password"
+                    labelMessage.text = "Apakah anda yakin ingin mereset password ini?"
+                    buttonNo.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    buttonYes.setOnClickListener {
+                        resetPassword()
+                        dialog.dismiss()
+                    }
+                }
+                dialog.setCancelable(true)
+                dialog.show()
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
         }
     }
 
@@ -131,10 +149,12 @@ class DetailUserActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-//                        level = responseBody?.level.toString()
+                        level = responseBody?.level.toString()
                         name = responseBody?.nama.toString()
                         username = responseBody?.username.toString()
 
+                        Log.d("cout", level)
+                        setSpLevel()
                         binding.apply {
                             layoutUpdateUser.editName.setText(name)
                             layoutUpdateUser.editUsername.setText(username)
@@ -155,6 +175,8 @@ class DetailUserActivity : BaseActivity() {
     private fun setSpLevel() {
         val levelAdapter = ArrayAdapter(this, R.layout.layout_dropdown, levelList)
         binding.layoutUpdateUser.spLevel.adapter = levelAdapter
+        val spinnerPosition: Int = levelAdapter.getPosition(level)
+        binding.layoutUpdateUser.spLevel.setSelection(spinnerPosition)
 
         binding.layoutUpdateUser.spLevel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -165,30 +187,6 @@ class DetailUserActivity : BaseActivity() {
             }
         }
     }
-
-//    private fun setSpGender() {
-//        val genderAdapter = ArrayAdapter(this, R.layout.layout_dropdown, gender)
-//        binding.layoutUpdateUser.spGender.adapter = genderAdapter
-//
-//        binding.layoutUpdateUser.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                nameGender = gender[p2]
-//
-//                when (nameGender) {
-//                    "Laki-laki" -> {
-//                        idGender = "1"
-//                    }
-//                    "Perempuan" -> {
-//                        idGender = "2"
-//                    }
-//                }
-//
-//            }
-//
-//            override fun onNothingSelected(p0: AdapterView<*>?) {
-//            }
-//        }
-//    }
 
     private fun updateUser() {
         if (name.isEmpty() || username.isEmpty()) {
@@ -231,6 +229,30 @@ class DetailUserActivity : BaseActivity() {
                     if (statusCode == "200") {
                         goToUser()
                         toast("User berhasil dihapus.")
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MetaResponse>, t: Throwable) {
+                dialog.hideDialog()
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
+
+    private fun resetPassword() {
+        dialog.showProgressDialog(this)
+        val client = ApiConfig.getApiService().resetPassword(username, level)
+        client.enqueue(object : Callback<MetaResponse> {
+            override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
+                dialog.hideDialog()
+                val statusCode = response.body()?.meta?.code
+
+                if (response.isSuccessful) {
+                    if (statusCode == "200") {
+                        toast("Reset password berhasil dilakukan.")
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
