@@ -31,7 +31,7 @@ class DetailContestActivity : BaseActivity() {
     private lateinit var idContest: String
     private lateinit var name: String
     private lateinit var date: String
-    private lateinit var trainer: String
+    private var trainer = ""
     private val level = "pelatih"
 
     private var idTrainer: String = ""
@@ -194,12 +194,13 @@ class DetailContestActivity : BaseActivity() {
                     if (statusCode == "200") {
                         name = responseBody?.namaLomba.toString()
                         date = responseBody?.waktuLomba.toString()
-                        trainer = responseBody?.idPelatih.toString()
+                        trainer = responseBody?.namaPelatih.toString()
+
+                        setSpTrainer()
 
                         binding.apply {
                             layoutUpdateContest.editName.setText(name)
                             layoutUpdateContest.editDate.setText(date)
-                            layoutUpdateContest.spTrainer.id = trainer.toInt()
                         }
                     }
                 } else {
@@ -219,7 +220,6 @@ class DetailContestActivity : BaseActivity() {
         client.enqueue(object : Callback<UserByLevelResponse> {
             override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
                 val statusCode = response.body()?.meta?.code
-                val message = response.body()?.meta?.message
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
@@ -233,6 +233,8 @@ class DetailContestActivity : BaseActivity() {
                         }
                         val trainerAdapter = ArrayAdapter(this@DetailContestActivity, R.layout.layout_dropdown, nameList)
                         binding.layoutUpdateContest.spTrainer.adapter = trainerAdapter
+                        val spinnerPosition: Int = trainerAdapter.getPosition(trainer)
+                        binding.layoutUpdateContest.spTrainer.setSelection(spinnerPosition)
 
                         binding.layoutUpdateContest.spTrainer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {

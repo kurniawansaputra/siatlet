@@ -153,8 +153,8 @@ class DetailUserActivity : BaseActivity() {
                         name = responseBody?.nama.toString()
                         username = responseBody?.username.toString()
 
-                        Log.d("cout", level)
                         setSpLevel()
+
                         binding.apply {
                             layoutUpdateUser.editName.setText(name)
                             layoutUpdateUser.editUsername.setText(username)
