@@ -121,6 +121,39 @@ interface ApiService {
     ): Call<CriteriaResponse>
 
     @FormUrlEncoded
+    @POST("api/kriteria/add")
+    fun addCriteria (
+        @Field("token") token: String,
+        @Field("nama_kriteria") name: String,
+        @Field("sifat") property: String,
+        @Field("id_lomba") idContest: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/kriteria/get_by_id")
+    fun getCriteriaById(
+        @Field("token") token: String,
+        @Field("id_kriteria") idCriteria: String
+    ): Call<CriteriaByIdResponse>
+
+    @FormUrlEncoded
+    @POST("api/kriteria/delete")
+    fun deleteCriteria(
+        @Field("token") token: String,
+        @Field("id_kriteria") idCriteria: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/kriteria/update")
+    fun updateCriteria (
+        @Field("token") token: String,
+        @Field("nama_kriteria") name: String,
+        @Field("sifat") property: String,
+        @Field("id_lomba") idContest: String,
+        @Field("id_kriteria") idCriteria: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
     @POST("api/peserta/get_all")
     fun getAllParticipant (
         @Field("token") token: String,

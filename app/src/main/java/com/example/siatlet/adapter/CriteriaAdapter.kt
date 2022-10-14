@@ -1,12 +1,15 @@
 package com.example.siatlet.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
 import com.example.siatlet.databinding.ItemRowCriteriaBinding
 import com.example.siatlet.model.DataCriteria
+import com.example.siatlet.ui.activity.DetailContestActivity
+import com.example.siatlet.ui.activity.DetailCriteriaActivity
 
 class CriteriaAdapter(private var criteriaList: List<DataCriteria>, private val context: Context): RecyclerView.Adapter<CriteriaAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowCriteriaBinding) : RecyclerView.ViewHolder(binding.root)
@@ -19,6 +22,7 @@ class CriteriaAdapter(private var criteriaList: List<DataCriteria>, private val 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(criteriaList[position]) {
+                val idCriteria = idKriteria
                 val name = namaKriteria
                 val property = sifat
                 val contest = namaLomba
@@ -36,6 +40,12 @@ class CriteriaAdapter(private var criteriaList: List<DataCriteria>, private val 
                     textName.text = name
                     textProperty.text = property
                     textContest.text = contest
+
+                    cardCriteria.setOnClickListener {
+                        val intent = Intent(context, DetailCriteriaActivity::class.java)
+                        intent.putExtra("id_criteria", idCriteria)
+                        context.startActivity(intent)
+                    }
                 }
             }
         }
