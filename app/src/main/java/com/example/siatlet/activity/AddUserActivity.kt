@@ -1,4 +1,4 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
 import android.content.Intent
 import android.os.Bundle

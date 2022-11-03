@@ -1,4 +1,4 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import com.example.siatlet.R
-import com.example.siatlet.databinding.ActivityAddCriteriaBinding
+import com.example.siatlet.databinding.ActivityAddCriteriaWeightBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.ContestResponse
-import com.example.siatlet.model.DataContest
+import com.example.siatlet.model.CriteriaResponse
+import com.example.siatlet.model.DataCriteria
 import com.example.siatlet.model.MetaResponse
 import com.example.siatlet.network.ApiConfig
 import com.example.siatlet.util.DialogUtil
@@ -19,35 +18,33 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddCriteriaActivity : BaseActivity() {
+class AddCriteriaWeightActivity : BaseActivity() {
     private lateinit var token: String
-    private lateinit var name: String
+    private lateinit var idContest: String
+    private lateinit var nameContest: String
+    private lateinit var weight: String
 
-    private var idContest: String = ""
-    private var nameContest: String = ""
-    private var property: String = "Benefit"
+    private lateinit var idCriteria: String
+    private lateinit var nameCriteria: String
 
     private lateinit var dialog: DialogUtil
 
-    private lateinit var binding: ActivityAddCriteriaBinding
+    private lateinit var binding: ActivityAddCriteriaWeightBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddCriteriaBinding.inflate(layoutInflater)
+        binding = ActivityAddCriteriaWeightBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
         setPref()
-        setSpContest()
-        setProperty()
         setToolbar()
+        setSpCriteria()
         setListener()
     }
 
     private fun init() {
         dialog = DialogUtil()
-
-        binding.layoutAddCriteria.rbBenefit.isChecked = true
     }
 
     private fun setToolbar() {
@@ -55,37 +52,41 @@ class AddCriteriaActivity : BaseActivity() {
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
+            toolbar.subtitle = nameContest
         }
     }
 
     private fun setPref() {
         val user = HawkStorage.instance(this).getUser()
         token = user.data?.token.toString()
+
+        idContest = intent.getStringExtra("id_contest").toString()
+        nameContest = intent.getStringExtra("name_contest").toString()
     }
 
-    private fun setSpContest() {
-        val client = ApiConfig.getApiService().getAllContest(token)
-        client.enqueue(object : Callback<ContestResponse> {
-            override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
+    private fun setSpCriteria() {
+        val client = ApiConfig.getApiService().getAllCriteria(token)
+        client.enqueue(object : Callback<CriteriaResponse> {
+            override fun onResponse(call: Call<CriteriaResponse>, response: Response<CriteriaResponse>) {
                 val statusCode = response.body()?.meta?.code
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        val contest: List<DataContest> = response.body()!!.data as List<DataContest>
+                        val criteria: List<DataCriteria> = response.body()!!.data as List<DataCriteria>
                         val nameList: MutableList<String> = ArrayList()
 
-                        for (i in contest.indices) {
+                        for (i in criteria.indices) {
                             nameList.add(
-                                contest[i].namaLomba.toString()
+                                criteria[i].namaKriteria.toString()
                             )
                         }
-                        val contestAdapter = ArrayAdapter(this@AddCriteriaActivity, R.layout.layout_dropdown, nameList)
-                        binding.layoutAddCriteria.spContest.adapter = contestAdapter
+                        val contestAdapter = ArrayAdapter(this@AddCriteriaWeightActivity, R.layout.layout_dropdown, nameList)
+                        binding.layoutAddCriteriaWeight.spCriteria.adapter = contestAdapter
 
-                        binding.layoutAddCriteria.spContest.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        binding.layoutAddCriteriaWeight.spCriteria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
-                                idContest = contest[position].idLomba.toString()
-                                nameContest = contest[position].namaLomba.toString()
+                                idCriteria = criteria[position].idKriteria.toString()
+                                nameCriteria = criteria[position].namaKriteria.toString()
                             }
 
                             override fun onNothingSelected(adapterView: AdapterView<*>) {}
@@ -96,45 +97,29 @@ class AddCriteriaActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CriteriaResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }
 
-    private fun setProperty() {
-        binding.apply {
-            layoutAddCriteria.rgProperty.setOnCheckedChangeListener { _, checkedId ->
-                val radio: RadioButton? = findViewById(checkedId)
-                when (radio) {
-                    layoutAddCriteria.rbBenefit -> {
-                        property = "Benefit"
-                    }
-                    layoutAddCriteria.rbCost -> {
-                        property = "Cost"
-                    }
-                }
-            }
-        }
-    }
-
     private fun setListener() {
         binding.apply {
-            layoutAddCriteria.buttonAddUpdate.text = getString(R.string.add)
-            layoutAddCriteria.buttonAddUpdate.setOnClickListener {
-                name = binding.layoutAddCriteria.editName.text.toString()
-                if (name.isEmpty()) {
+            layoutAddCriteriaWeight.buttonAddUpdate.text = getString(R.string.add)
+            layoutAddCriteriaWeight.buttonAddUpdate.setOnClickListener {
+                weight = binding.layoutAddCriteriaWeight.editWeight.text.toString()
+                if (weight.isEmpty()) {
                     alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
                 } else {
-                    addCriteria()
+                    addCriteriaWeight()
                 }
             }
         }
     }
 
-    private fun addCriteria() {
+    private fun addCriteriaWeight() {
         dialog.showProgressDialog(this)
-        val client = ApiConfig.getApiService().addCriteria(token, name, property, idContest)
+        val client = ApiConfig.getApiService().addCriteriaWeight(token, idContest, idCriteria, weight)
         client.enqueue(object : Callback<MetaResponse> {
             override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                 dialog.hideDialog()
@@ -143,8 +128,8 @@ class AddCriteriaActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        goToCriteria()
-                        toast("Kriteria berhasil ditambahkan.")
+                        goToCriteriaWeight()
+                        toast("Bobot kriteria berhasil ditambahkan.")
                     } else {
                         alert(R.drawable.ic_warning, "Peringatan", "$message", R.color.red)
                     }
@@ -160,14 +145,16 @@ class AddCriteriaActivity : BaseActivity() {
         })
     }
 
-    private fun goToCriteria() {
-        val intent = Intent(this, CriteriaActivity::class.java)
+    private fun goToCriteriaWeight() {
+        val intent = Intent(this, CriteriaWeightActivity::class.java)
+        intent.putExtra("id_contest", idContest)
+        intent.putExtra("name_contest", nameContest)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }
 
     companion object {
-        const val TAG = "AddCriteria"
+        const val TAG = "AddCriteriaWeight"
     }
 }

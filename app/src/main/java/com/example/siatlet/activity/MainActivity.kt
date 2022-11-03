@@ -1,4 +1,4 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -32,8 +32,7 @@ class MainActivity : AppCompatActivity() {
 
             when (level) {
                 "admin" -> {
-                    containerParticipant.cardMenu.visibility = View.GONE
-                    containerCriteriaValue.cardMenu.visibility = View.GONE
+                    containerContestByTrainer.cardMenu.visibility = View.GONE
                     containerScore.cardMenu.visibility = View.GONE
                 }
                 "pelatih" -> {
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                     containerCriteria.cardMenu.visibility = View.GONE
                 }
                 "pemilik" -> {
-                    containerCriteriaValue.cardMenu.visibility = View.GONE
                     containerScore.cardMenu.visibility = View.GONE
                     containerUser.cardMenu.visibility = View.GONE
                     containerContest.cardMenu.visibility = View.GONE
@@ -57,17 +55,14 @@ class MainActivity : AppCompatActivity() {
             containerUser.labelTitle.text = "User"
             containerUser.ivIcon.setImageResource(R.drawable.ic_user)
 
-            containerParticipant.labelTitle.text = "Peserta"
-            containerParticipant.ivIcon.setImageResource(R.drawable.ic_participant)
+            containerContestByTrainer.labelTitle.text = "Lomba"
+            containerContestByTrainer.ivIcon.setImageResource(R.drawable.ic_contest)
 
             containerContest.labelTitle.text = "Lomba"
             containerContest.ivIcon.setImageResource(R.drawable.ic_contest)
 
             containerCriteria.labelTitle.text = "Kriteria"
             containerCriteria.ivIcon.setImageResource(R.drawable.ic_criteria)
-
-            containerCriteriaValue.labelTitle.text = "Bobot Kriteria"
-            containerCriteriaValue.ivIcon.setImageResource(R.drawable.ic_criteria)
 
             containerScore.labelTitle.text = "Nilai Peserta"
             containerScore.ivIcon.setImageResource(R.drawable.ic_score)
@@ -98,9 +93,8 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, CriteriaActivity::class.java)
                 startActivity(intent)
             }
-
-            containerParticipant.cardMenu.setOnClickListener {
-                val intent = Intent(this@MainActivity, ParticipantActivity::class.java)
+            containerContestByTrainer.cardMenu.setOnClickListener {
+                val intent = Intent(this@MainActivity, ContestByTrainerActivity::class.java)
                 startActivity(intent)
             }
         }

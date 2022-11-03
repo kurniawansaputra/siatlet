@@ -1,28 +1,28 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.siatlet.adapter.UserAdapter
-import com.example.siatlet.databinding.ActivityUserBinding
+import com.example.siatlet.adapter.ContestByTrainerAdapter
+import com.example.siatlet.databinding.ActivityContestByTrainerBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.DataUser
-import com.example.siatlet.model.UserResponse
+import com.example.siatlet.model.ContestResponse
+import com.example.siatlet.model.DataContest
 import com.example.siatlet.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserActivity : AppCompatActivity() {
+class ContestByTrainerActivity : AppCompatActivity() {
     private lateinit var token: String
+    private lateinit var idTrainer: String
 
-    private lateinit var binding: ActivityUserBinding
+    private lateinit var binding: ActivityContestByTrainerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserBinding.inflate(layoutInflater)
+        binding = ActivityContestByTrainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setPref()
@@ -34,6 +34,7 @@ class UserActivity : AppCompatActivity() {
     private fun setPref() {
         val user = HawkStorage.instance(this).getUser()
         token = user.data?.token.toString()
+        idTrainer = user.data?.idUser.toString()
     }
 
     private fun setToolbar() {
@@ -46,36 +47,37 @@ class UserActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.apply {
-            fabAddUser.setOnClickListener {
-                val intent = Intent(this@UserActivity, AddUserActivity::class.java)
-                startActivity(intent)
-            }
+//            if (level == "pelatih") {
+//                fabAddParticipant.visibility = View.VISIBLE
+//            } else {
+//                fabAddParticipant.visibility = View.GONE
+//            }
         }
     }
 
     private fun setList() {
         setLoading(true)
-        val client = ApiConfig.getApiService().getAllUser(token)
-        client.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+        val client = ApiConfig.getApiService().getContestByTrainer(idTrainer, token)
+        client.enqueue(object : Callback<ContestResponse> {
+            override fun onResponse(call: Call<ContestResponse>, response: Response<ContestResponse>) {
                 setLoading(false)
                 val statusCode = response.body()?.meta?.code
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
                         val responseBody = response.body()
-                        val userAdapter = UserAdapter(responseBody?.data as ArrayList<DataUser>, this@UserActivity)
-                        binding.rvUser.adapter = userAdapter
-                        binding.rvUser.setHasFixedSize(true)
+                        val contestByTrainerAdapter = ContestByTrainerAdapter(responseBody?.data as ArrayList<DataContest>, this@ContestByTrainerActivity)
+                        binding.rvContest.adapter = contestByTrainerAdapter
+                        binding.rvContest.setHasFixedSize(true)
                     }
 
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    Log.e(UserActivity.TAG, "onFailure: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ContestResponse>, t: Throwable) {
                 setLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
+                Log.e(UserActivity.TAG, "onFailure: ${t.message}")
             }
         })
     }
@@ -89,6 +91,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TAG = "User"
+        const val TAG = "Participant"
     }
 }

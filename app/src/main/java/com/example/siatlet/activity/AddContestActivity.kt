@@ -1,4 +1,4 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
 import android.app.DatePickerDialog
 import android.content.Intent

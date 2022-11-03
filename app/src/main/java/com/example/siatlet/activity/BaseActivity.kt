@@ -1,4 +1,4 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity

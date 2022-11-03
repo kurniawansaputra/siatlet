@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
 import com.example.siatlet.databinding.ItemRowUserBinding
 import com.example.siatlet.model.DataUser
-import com.example.siatlet.ui.activity.DetailUserActivity
+import com.example.siatlet.activity.DetailUserActivity
 
 class UserAdapter(private var userList: List<DataUser>, private val context: Context): RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private lateinit var nameLevel: String

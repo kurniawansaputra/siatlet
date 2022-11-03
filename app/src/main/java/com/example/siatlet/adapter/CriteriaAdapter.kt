@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
 import com.example.siatlet.databinding.ItemRowCriteriaBinding
 import com.example.siatlet.model.DataCriteria
-import com.example.siatlet.ui.activity.DetailContestActivity
-import com.example.siatlet.ui.activity.DetailCriteriaActivity
+import com.example.siatlet.activity.DetailCriteriaActivity
 
 class CriteriaAdapter(private var criteriaList: List<DataCriteria>, private val context: Context): RecyclerView.Adapter<CriteriaAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowCriteriaBinding) : RecyclerView.ViewHolder(binding.root)

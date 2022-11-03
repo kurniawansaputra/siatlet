@@ -1,6 +1,5 @@
-package com.example.siatlet.ui.activity
+package com.example.siatlet.activity
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,46 +8,39 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import com.example.siatlet.R
-import com.example.siatlet.databinding.ActivityDetailContestBinding
+import com.example.siatlet.databinding.ActivityDetailCriteriaWeightBinding
 import com.example.siatlet.databinding.LayoutDialogBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.ContestByIdResponse
-import com.example.siatlet.model.DataUserByLevel
-import com.example.siatlet.model.MetaResponse
-import com.example.siatlet.model.UserByLevelResponse
+import com.example.siatlet.model.*
 import com.example.siatlet.network.ApiConfig
 import com.example.siatlet.util.DialogUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
-class DetailContestActivity : BaseActivity() {
+class DetailCriteriaWeightActivity : BaseActivity() {
     private lateinit var token: String
     private lateinit var idContest: String
-    private lateinit var name: String
-    private lateinit var date: String
-    private var trainer = ""
-    private val level = "pelatih"
+    private lateinit var nameContest: String
+    private lateinit var idCriteriaWeight: String
 
-    private var idTrainer: String = ""
-    private var nameTrainer: String = ""
+    private var idCriteria = ""
+    private var nameCriteria = ""
+    private var weight = ""
 
     private lateinit var dialog: DialogUtil
 
-    private lateinit var binding: ActivityDetailContestBinding
+    private lateinit var binding: ActivityDetailCriteriaWeightBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailContestBinding.inflate(layoutInflater)
+        binding = ActivityDetailCriteriaWeightBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
         setPref()
-        setSpTrainer()
         setToolbar()
         setListener()
         setDetail()
@@ -62,7 +54,9 @@ class DetailContestActivity : BaseActivity() {
         val user = HawkStorage.instance(this).getUser()
         token = user.data?.token.toString()
 
+        idCriteriaWeight = intent.getStringExtra("id_criteria_weight").toString()
         idContest = intent.getStringExtra("id_contest").toString()
+        nameContest = intent.getStringExtra("name_contest").toString()
     }
 
     private fun setToolbar() {
@@ -70,6 +64,7 @@ class DetailContestActivity : BaseActivity() {
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
+            toolbar.subtitle = nameContest
 
             ivDelete.setOnClickListener {
                 val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
@@ -83,7 +78,7 @@ class DetailContestActivity : BaseActivity() {
                         dialog.dismiss()
                     }
                     buttonYes.setOnClickListener {
-                        deleteContestById()
+                        deleteCriteriaWeightById()
                         dialog.dismiss()
                     }
                 }
@@ -94,42 +89,9 @@ class DetailContestActivity : BaseActivity() {
         }
     }
 
-    private fun setListener() {
-        binding.apply {
-            layoutUpdateContest.editDate.setOnClickListener {
-                setDate()
-            }
-
-            layoutUpdateContest.buttonAddUpdate.text = getString(R.string.update)
-            layoutUpdateContest.buttonAddUpdate.setOnClickListener {
-                name = binding.layoutUpdateContest.editName.text.toString()
-                date = binding.layoutUpdateContest.editDate.text.toString()
-
-                val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
-                val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
-                builder.setView(binding.root)
-                val dialog: AlertDialog = builder.create()
-                binding.apply {
-                    labelTitle.text = getString(R.string.title_update)
-                    labelMessage.text = getString(R.string.message_update)
-                    buttonNo.setOnClickListener {
-                        dialog.dismiss()
-                    }
-                    buttonYes.setOnClickListener {
-                        updateContest()
-                        dialog.dismiss()
-                    }
-                }
-                dialog.setCancelable(true)
-                dialog.show()
-                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            }
-        }
-    }
-
-    private fun deleteContestById() {
+    private fun deleteCriteriaWeightById() {
         dialog.showProgressDialog(this)
-        val client = ApiConfig.getApiService().deleteContest(token, idContest)
+        val client = ApiConfig.getApiService().deleteCriteriaWeight(token, idCriteriaWeight)
         client.enqueue(object : Callback<MetaResponse> {
             override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                 dialog.hideDialog()
@@ -137,8 +99,8 @@ class DetailContestActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        goToContest()
-                        toast("Lomba berhasil dihapus.")
+                        goToCriteriaWeight()
+                        toast("Bobot kriteria berhasil dihapus.")
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -152,12 +114,40 @@ class DetailContestActivity : BaseActivity() {
         })
     }
 
-    private fun updateContest() {
-        if (name.isEmpty() || date.isEmpty()) {
+    private fun setListener() {
+        binding.apply {
+            layoutUpdateCriteriaWeight.buttonAddUpdate.text = getString(R.string.update)
+            layoutUpdateCriteriaWeight.buttonAddUpdate.setOnClickListener {
+                weight = binding.layoutUpdateCriteriaWeight.editWeight.text.toString()
+
+                val binding: LayoutDialogBinding = LayoutDialogBinding.inflate(layoutInflater)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(layoutInflater.context)
+                builder.setView(binding.root)
+                val dialog: AlertDialog = builder.create()
+                binding.apply {
+                    labelTitle.text = getString(R.string.title_update)
+                    labelMessage.text = getString(R.string.message_update)
+                    buttonNo.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    buttonYes.setOnClickListener {
+                        updateCriteriaWeight()
+                        dialog.dismiss()
+                    }
+                }
+                dialog.setCancelable(true)
+                dialog.show()
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
+        }
+    }
+
+    private fun updateCriteriaWeight() {
+        if (weight.isEmpty()) {
             alert(R.drawable.ic_warning, "Peringatan", "Harap lengkapi form terlebih dahulu.", R.color.red)
         } else {
             dialog.showProgressDialog(this)
-            val client = ApiConfig.getApiService().updateContest(token, idContest, name, date, idTrainer)
+            val client = ApiConfig.getApiService().updateCriteriaWeight(token, idCriteriaWeight, idContest, idCriteria, weight)
             client.enqueue(object : Callback<MetaResponse> {
                 override fun onResponse(call: Call<MetaResponse>, response: Response<MetaResponse>) {
                     dialog.hideDialog()
@@ -165,8 +155,8 @@ class DetailContestActivity : BaseActivity() {
 
                     if (response.isSuccessful) {
                         if (statusCode == "200") {
-                            goToContest()
-                            toast("Lomba berhasil diupdate.")
+                            goToCriteriaWeight()
+                            toast("Bobot kriteria berhasil diupdate.")
                         }
                     } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
@@ -183,24 +173,22 @@ class DetailContestActivity : BaseActivity() {
 
     private fun setDetail() {
         setLoading(true)
-        val client = ApiConfig.getApiService().getContestById(token, idContest)
-        client.enqueue(object : Callback<ContestByIdResponse> {
-            override fun onResponse(call: Call<ContestByIdResponse>, response: Response<ContestByIdResponse>) {
+        val client = ApiConfig.getApiService().getCriteriaWeightById(token, idCriteriaWeight)
+        client.enqueue(object : Callback<CriteriaWeightByIdResponse> {
+            override fun onResponse(call: Call<CriteriaWeightByIdResponse>, response: Response<CriteriaWeightByIdResponse>) {
                 setLoading(false)
                 val statusCode = response.body()?.meta?.code
                 val responseBody = response.body()?.data
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        name = responseBody?.namaLomba.toString()
-                        date = responseBody?.waktuLomba.toString()
-                        trainer = responseBody?.namaPelatih.toString()
+                        weight = responseBody?.bobot.toString()
+                        nameCriteria = responseBody?.namaKriteria.toString()
 
-                        setSpTrainer()
+                        setSpCriteriaWeight()
 
                         binding.apply {
-                            layoutUpdateContest.editName.setText(name)
-                            layoutUpdateContest.editDate.setText(date)
+                            layoutUpdateCriteriaWeight.editWeight.setText(weight)
                         }
                     }
                 } else {
@@ -208,52 +196,61 @@ class DetailContestActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ContestByIdResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CriteriaWeightByIdResponse>, t: Throwable) {
                 setLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }
 
-    private fun setSpTrainer() {
-        val client = ApiConfig.getApiService().getUserByLevel(level)
-        client.enqueue(object : Callback<UserByLevelResponse> {
-            override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
+    private fun setSpCriteriaWeight() {
+        val client = ApiConfig.getApiService().getAllCriteria(token)
+        client.enqueue(object : Callback<CriteriaResponse> {
+            override fun onResponse(call: Call<CriteriaResponse>, response: Response<CriteriaResponse>) {
                 val statusCode = response.body()?.meta?.code
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        val userByLevel: List<DataUserByLevel> = response.body()!!.data as List<DataUserByLevel>
+                        val criteriaData: List<DataCriteria> = response.body()!!.data as List<DataCriteria>
                         val nameList: MutableList<String> = ArrayList()
 
-                        for (i in userByLevel.indices) {
+                        for (i in criteriaData.indices) {
                             nameList.add(
-                                userByLevel[i].nama.toString()
+                                criteriaData[i].namaKriteria.toString()
                             )
                         }
-                        val trainerAdapter = ArrayAdapter(this@DetailContestActivity, R.layout.layout_dropdown, nameList)
-                        binding.layoutUpdateContest.spTrainer.adapter = trainerAdapter
-                        val spinnerPosition: Int = trainerAdapter.getPosition(trainer)
-                        binding.layoutUpdateContest.spTrainer.setSelection(spinnerPosition)
+                        val contestAdapter = ArrayAdapter(this@DetailCriteriaWeightActivity, R.layout.layout_dropdown, nameList)
+                        binding.layoutUpdateCriteriaWeight.spCriteria.adapter = contestAdapter
+                        val spinnerPosition: Int = contestAdapter.getPosition(nameCriteria)
+                        binding.layoutUpdateCriteriaWeight.spCriteria.setSelection(spinnerPosition)
 
-                        binding.layoutUpdateContest.spTrainer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        binding.layoutUpdateCriteriaWeight.spCriteria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
-                                idTrainer = userByLevel[position].idUser.toString()
-                                nameTrainer = userByLevel[position].nama.toString()
+                                idCriteria = criteriaData[position].idKriteria.toString()
+                                nameCriteria = criteriaData[position].namaKriteria.toString()
                             }
 
                             override fun onNothingSelected(adapterView: AdapterView<*>) {}
                         }
                     }
                 } else {
-                    Log.e(AddContestActivity.TAG, "onFailure: ${response.message()}")
+                    Log.e(AddCriteriaWeightActivity.TAG, "onFailure: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<UserByLevelResponse>, t: Throwable) {
-                Log.e(AddContestActivity.TAG, "onFailure: ${t.message}")
+            override fun onFailure(call: Call<CriteriaResponse>, t: Throwable) {
+                Log.e(AddCriteriaWeightActivity.TAG, "onFailure: ${t.message}")
             }
         })
+    }
+
+    private fun goToCriteriaWeight() {
+        val intent = Intent(this, CriteriaWeightActivity::class.java)
+        intent.putExtra("id_contest", idContest)
+        intent.putExtra("name_contest", nameContest)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 
     private fun setLoading(condition: Boolean) {
@@ -266,25 +263,7 @@ class DetailContestActivity : BaseActivity() {
         }
     }
 
-    private fun goToContest() {
-        val intent = Intent(this, ContestActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        finish()
-    }
-
-    private fun setDate() {
-        val currentDate = Calendar.getInstance()
-        val year = currentDate.get(Calendar.YEAR)
-        val month = currentDate.get(Calendar.MONTH)
-        val day = currentDate.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(this, { _: DatePicker, i: Int, i1: Int, i2: Int ->
-            binding.layoutUpdateContest.editDate.setText("$i-${i1 + 1}-$i2")
-        }, year, month, day).show()
-    }
-
     companion object {
-        const val TAG = "DetailContest"
+        const val TAG = "DetailCriteriaWeight"
     }
 }

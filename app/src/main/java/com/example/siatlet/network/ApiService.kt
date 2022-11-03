@@ -158,4 +158,51 @@ interface ApiService {
     fun getAllParticipant (
         @Field("token") token: String,
     ): Call<ParticipantResponse>
+
+    @FormUrlEncoded
+    @POST("api/lomba/get_by_pelatih")
+    fun getContestByTrainer (
+        @Field("id_pelatih") idTrainer: String,
+        @Field("token") token: String,
+    ): Call<ContestResponse>
+
+    @FormUrlEncoded
+    @POST("api/bobotkriteria/by_lomba")
+    fun getCriteriaWeihgtByContest(
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String
+    ): Call<CriteriaWeightByContestResponse>
+
+    @FormUrlEncoded
+    @POST("api/bobotkriteria/add")
+    fun addCriteriaWeight (
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String,
+        @Field("id_kriteria") idCriteria: String,
+        @Field("bobot") weight: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/bobotkriteria/delete")
+    fun deleteCriteriaWeight(
+        @Field("token") token: String,
+        @Field("id_bobot") idCriteriaWeight: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/bobotkriteria/get_by_id")
+    fun getCriteriaWeightById(
+        @Field("token") token: String,
+        @Field("id_bobot") idCriteriaWeight: String
+    ): Call<CriteriaWeightByIdResponse>
+
+    @FormUrlEncoded
+    @POST("api/bobotkriteria/update")
+    fun updateCriteriaWeight (
+        @Field("token") token: String,
+        @Field("id_bobot") idCriteriaWeight: String,
+        @Field("id_lomba") idContest: String,
+        @Field("id_kriteria") idCriteria: String,
+        @Field("bobot") weight: String
+    ): Call<MetaResponse>
 }

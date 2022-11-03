@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.databinding.ItemRowContestBinding
 import com.example.siatlet.model.DataContest
-import com.example.siatlet.ui.activity.DetailContestActivity
+import com.example.siatlet.activity.DetailContestActivity
 
 class ContestAdapter(private var contestList: List<DataContest>, private val context: Context): RecyclerView.Adapter<ContestAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowContestBinding) : RecyclerView.ViewHolder(binding.root)

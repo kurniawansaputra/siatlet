@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DetailUserActivity">
+    tools:context=".activity.DetailCriteriaWeightActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout2"
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -27,9 +27,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="Detail User"
+                app:title="Detail Bobot Kriteria"
                 app:titleTextAppearance="@style/TextView.PoppinsMedium18spBlack"
-                app:titleTextColor="@color/black" />
+                app:titleTextColor="@color/black"
+                app:subtitle="null"
+                app:subtitleTextAppearance="@style/TextView.PoppinsMedium14spBlack"
+                app:subtitleTextColor="@color/black"/>
 
             <ImageView
                 android:id="@+id/ivDelete"
@@ -53,33 +56,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <include
-                android:id="@+id/layoutUpdateUser"
-                layout="@layout/layout_add_update_user"
+                android:id="@+id/layoutUpdateCriteriaWeight"
+                layout="@layout/layout_add_update_criteria_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonResetPassword"
-                style="@style/Button.Red"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="Reset Password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutUpdateUser" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -92,6 +82,6 @@
         android:layout_marginTop="210dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
