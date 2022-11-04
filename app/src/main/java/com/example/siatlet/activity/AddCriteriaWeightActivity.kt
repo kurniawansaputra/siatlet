@@ -65,7 +65,7 @@ class AddCriteriaWeightActivity : BaseActivity() {
     }
 
     private fun setSpCriteria() {
-        val client = ApiConfig.getApiService().getAllCriteria(token)
+        val client = ApiConfig.getApiService().getCriteriatByIdContest(token, idContest)
         client.enqueue(object : Callback<CriteriaResponse> {
             override fun onResponse(call: Call<CriteriaResponse>, response: Response<CriteriaResponse>) {
                 val statusCode = response.body()?.meta?.code

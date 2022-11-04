@@ -23,11 +23,21 @@
         tools:text="MFT" />
 
     <TextView
+        android:id="@+id/textProperty"
+        style="@style/TextView.PoppinsRegular14spBlack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/textName"
+        app:layout_constraintStart_toStartOf="@+id/textName"
+        app:layout_constraintTop_toBottomOf="@+id/textName"
+        tools:text="Benefit" />
+
+    <TextView
         android:id="@+id/textWeight"
         style="@style/TextView.PoppinsMedium14spBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textName"
+        app:layout_constraintBottom_toBottomOf="@+id/textProperty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textName"
         tools:text="15" />
@@ -41,6 +51,6 @@
         android:background="@color/bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textName" />
+        app:layout_constraintTop_toBottomOf="@+id/textProperty" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

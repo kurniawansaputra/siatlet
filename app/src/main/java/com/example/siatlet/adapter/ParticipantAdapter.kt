@@ -1,10 +1,13 @@
 package com.example.siatlet.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siatlet.R
+import com.example.siatlet.activity.DetailCriteriaWeightActivity
+import com.example.siatlet.activity.DetailParticipantActivity
 import com.example.siatlet.databinding.ItemRowParticipantBinding
 import com.example.siatlet.model.DataParticipant
 
@@ -19,6 +22,7 @@ class ParticipantAdapter(private var participantList: List<DataParticipant>, pri
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(participantList[position]) {
+                val idContest = idLomba
                 val name = namaPeserta
                 val numberReg = noReg
 
@@ -34,6 +38,14 @@ class ParticipantAdapter(private var participantList: List<DataParticipant>, pri
                 binding.apply {
                     textName.text = name
                     textNumberReg.text = numberReg
+
+                    cardParticipant.setOnClickListener {
+                        val intent = Intent(context, DetailParticipantActivity::class.java)
+//                        intent.putExtra("id_criteria_weight", idCriteriaWeight)
+//                        intent.putExtra("id_contest", idContest)
+//                        intent.putExtra("name_contest", nameContest)
+                        context.startActivity(intent)
+                    }
                 }
             }
         }

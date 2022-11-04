@@ -73,7 +73,7 @@ interface ApiService {
     @POST("api/user/get_by_level")
     fun getUserByLevel(
         @Field("level") level: String,
-    ): Call<UserByLevelResponse>
+    ): Call<UserResponse>
 
     @FormUrlEncoded
     @POST("api/lomba/get_all")
@@ -160,6 +160,13 @@ interface ApiService {
     ): Call<ParticipantResponse>
 
     @FormUrlEncoded
+    @POST("api/peserta/peserta_by_lomba")
+    fun getParticipantByIdContest (
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String
+    ): Call<ParticipantResponse>
+
+    @FormUrlEncoded
     @POST("api/lomba/get_by_pelatih")
     fun getContestByTrainer (
         @Field("id_pelatih") idTrainer: String,
@@ -195,6 +202,13 @@ interface ApiService {
         @Field("token") token: String,
         @Field("id_bobot") idCriteriaWeight: String
     ): Call<CriteriaWeightByIdResponse>
+
+    @FormUrlEncoded
+    @POST("api/kriteria/get_by_id_lomba")
+    fun getCriteriatByIdContest(
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String
+    ): Call<CriteriaResponse>
 
     @FormUrlEncoded
     @POST("api/bobotkriteria/update")

@@ -29,5 +29,8 @@ data class DataCriteriaWeightByContest(
 	val namaLomba: String? = null,
 
 	@field:SerializedName("id_kriteria")
-	val idKriteria: String? = null
+	val idKriteria: String? = null,
+
+	@field:SerializedName("sifat")
+	val sifat: String? = null
 )

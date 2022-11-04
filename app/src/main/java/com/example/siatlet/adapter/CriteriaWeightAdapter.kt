@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.siatlet.activity.CriteriaWeightActivity
+import com.example.siatlet.R
 import com.example.siatlet.activity.DetailCriteriaWeightActivity
 import com.example.siatlet.databinding.ItemRowCriteriaWeightBinding
 import com.example.siatlet.model.DataCriteriaWeightByContest
@@ -26,10 +26,21 @@ class CriteriaWeightAdapter(private var criteriaWeightList: List<DataCriteriaWei
                 val nameContest = namaLomba
                 val nameCriteriaWeight = namaKriteria
                 val weight = bobot
+                val property = sifat
+
+                when (property) {
+                    "Benefit" -> {
+                        binding.textProperty.setTextColor(context.getColor(R.color.green))
+                    }
+                    "Cost" -> {
+                        binding.textProperty.setTextColor(context.getColor(R.color.red))
+                    }
+                }
 
                 binding.apply {
                     textName.text = nameCriteriaWeight
                     textWeight.text = weight
+                    textProperty.text = property
 
                     cardCriteriaWeight.setOnClickListener {
                         val intent = Intent(context, DetailCriteriaWeightActivity::class.java)

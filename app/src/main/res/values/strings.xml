@@ -25,4 +25,14 @@
     <string name="criteria_value">Nilai Kriteria</string>
     <string name="criteria_weight">Bobot Kriteria</string>
     <string name="participant">Peserta</string>
+    <string name="place_of_birth">Tempat Lahir</string>
+    <string name="input_place_of_birth">Masukan tempat lahir</string>
+    <string name="date_of_birth">Tanggal Lahir</string>
+    <string name="input_date_of_birth">Pilih tanggal lahir</string>
+    <string name="male">Laki-laki</string>
+    <string name="female">Perempuan</string>
+    <string name="weight">Berat Badan</string>
+    <string name="input_weight">Masukan berat badan</string>
+    <string name="job">Pekerjaan</string>
+    <string name="input_job">Masukan pekerjaan</string>
 </resources>

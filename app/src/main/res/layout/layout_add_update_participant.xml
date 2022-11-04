@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerAddUpdateUser"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/labelName"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editName"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/labelName"
+            app:layout_constraintStart_toStartOf="@+id/labelName"
+            app:layout_constraintTop_toBottomOf="@+id/labelName"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/labelPlaceOfBirth"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/place_of_birth"
+            app:layout_constraintEnd_toEndOf="@+id/editName"
+            app:layout_constraintStart_toStartOf="@+id/editName"
+            app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+        <EditText
+            android:id="@+id/editPlaceOfBirth"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_place_of_birth"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/labelName"
+            app:layout_constraintStart_toStartOf="@+id/labelPlaceOfBirth"
+            app:layout_constraintTop_toBottomOf="@+id/labelPlaceOfBirth" />
+
+        <TextView
+            android:id="@+id/labelDateOfBirth"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/date_of_birth"
+            app:layout_constraintEnd_toEndOf="@+id/editPlaceOfBirth"
+            app:layout_constraintStart_toStartOf="@+id/editPlaceOfBirth"
+            app:layout_constraintTop_toBottomOf="@+id/editPlaceOfBirth" />
+
+        <EditText
+            android:id="@+id/editDate"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:focusable="false"
+            android:hint="@string/input_date_of_birth"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="@+id/labelDateOfBirth"
+            app:layout_constraintStart_toStartOf="@+id/labelDateOfBirth"
+            app:layout_constraintTop_toBottomOf="@+id/labelDateOfBirth" />
+
+        <TextView
+            android:id="@+id/labelGender"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/gender"
+            app:layout_constraintEnd_toEndOf="@+id/editDate"
+            app:layout_constraintStart_toStartOf="@+id/editDate"
+            app:layout_constraintTop_toBottomOf="@+id/editDate" />
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/labelGender"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/labelGender"
+            app:layout_constraintTop_toBottomOf="@+id/labelGender">
+
+            <RadioButton
+                android:id="@+id/rbMale"
+                style="@style/TextView.PoppinsRegular14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male" />
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                style="@style/TextView.PoppinsRegular14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/female" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/labelWeight"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/weight"
+            app:layout_constraintEnd_toEndOf="@+id/rgGender"
+            app:layout_constraintStart_toStartOf="@+id/rgGender"
+            app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+
+        <EditText
+            android:id="@+id/editWeight"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_weight"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/labelWeight"
+            app:layout_constraintStart_toStartOf="@+id/labelWeight"
+            app:layout_constraintTop_toBottomOf="@+id/labelWeight" />
+
+        <TextView
+            android:id="@+id/labelJob"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/job"
+            app:layout_constraintEnd_toEndOf="@+id/editWeight"
+            app:layout_constraintStart_toStartOf="@+id/editWeight"
+            app:layout_constraintTop_toBottomOf="@+id/editWeight" />
+
+        <EditText
+            android:id="@+id/editJob"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_job"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/labelJob"
+            app:layout_constraintStart_toStartOf="@+id/labelJob"
+            app:layout_constraintTop_toBottomOf="@+id/labelJob" />
+
+        <TextView
+            android:id="@+id/labelAddress"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/address"
+            app:layout_constraintEnd_toEndOf="@+id/editJob"
+            app:layout_constraintStart_toStartOf="@+id/editJob"
+            app:layout_constraintTop_toBottomOf="@+id/editJob" />
+
+        <EditText
+            android:id="@+id/editAddress"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_address"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textNoSuggestions|textCapSentences"
+            android:maxLines="3"
+            android:minLines="3"
+            android:gravity="top"
+            android:paddingVertical="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/labelAddress"
+            app:layout_constraintStart_toStartOf="@+id/labelAddress"
+            app:layout_constraintTop_toBottomOf="@+id/labelAddress" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddUpdate"
+            style="@style/Button.Primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/add"
+            app:layout_constraintEnd_toEndOf="@+id/editAddress"
+            app:layout_constraintStart_toStartOf="@+id/editAddress"
+            app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

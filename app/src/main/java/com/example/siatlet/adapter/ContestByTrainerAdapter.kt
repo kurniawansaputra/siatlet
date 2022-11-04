@@ -12,6 +12,7 @@ import com.example.siatlet.databinding.ItemRowContestByTrainerBinding
 import com.example.siatlet.databinding.LayoutDialogContestBinding
 import com.example.siatlet.model.DataContest
 import com.example.siatlet.activity.CriteriaWeightActivity
+import com.example.siatlet.activity.ParticipantActivity
 
 class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest>, private val context: Context): RecyclerView.Adapter<ContestByTrainerAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowContestByTrainerBinding) : RecyclerView.ViewHolder(binding.root)
@@ -38,6 +39,14 @@ class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest
                         builder.setView(binding.root)
                         val dialog: AlertDialog = builder.create()
                         binding.apply {
+                            labelParticipant.setOnClickListener {
+                                val intent = Intent(context, ParticipantActivity::class.java)
+                                intent.putExtra("id_contest", idContest)
+                                intent.putExtra("name_contest", name)
+                                context.startActivity(intent)
+                                dialog.dismiss()
+                            }
+
                             labelCriteriaWeight.setOnClickListener {
                                 val intent = Intent(context, CriteriaWeightActivity::class.java)
                                 intent.putExtra("id_contest", idContest)
@@ -45,9 +54,11 @@ class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest
                                 context.startActivity(intent)
                                 dialog.dismiss()
                             }
+
                             labelCriteriaValue.setOnClickListener {
 
                             }
+
                             labelBack.setOnClickListener {
                                 dialog.dismiss()
                             }

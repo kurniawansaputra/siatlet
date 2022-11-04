@@ -185,7 +185,7 @@ class DetailCriteriaWeightActivity : BaseActivity() {
                         weight = responseBody?.bobot.toString()
                         nameCriteria = responseBody?.namaKriteria.toString()
 
-                        setSpCriteriaWeight()
+                        setSpCriteria()
 
                         binding.apply {
                             layoutUpdateCriteriaWeight.editWeight.setText(weight)
@@ -203,8 +203,8 @@ class DetailCriteriaWeightActivity : BaseActivity() {
         })
     }
 
-    private fun setSpCriteriaWeight() {
-        val client = ApiConfig.getApiService().getAllCriteria(token)
+    private fun setSpCriteria() {
+        val client = ApiConfig.getApiService().getCriteriatByIdContest(token, idContest)
         client.enqueue(object : Callback<CriteriaResponse> {
             override fun onResponse(call: Call<CriteriaResponse>, response: Response<CriteriaResponse>) {
                 val statusCode = response.body()?.meta?.code

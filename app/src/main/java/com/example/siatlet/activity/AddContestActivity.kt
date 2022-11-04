@@ -47,14 +47,14 @@ class AddContestActivity : BaseActivity() {
 
     private fun setSpTrainer() {
         val client = ApiConfig.getApiService().getUserByLevel(level)
-        client.enqueue(object : Callback<UserByLevelResponse> {
-            override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
+        client.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 val statusCode = response.body()?.meta?.code
                 val message = response.body()?.meta?.message
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        val userByLevel: List<DataUserByLevel> = response.body()!!.data as List<DataUserByLevel>
+                        val userByLevel: List<DataUser> = response.body()!!.data as List<DataUser>
                         val nameList: MutableList<String> = ArrayList()
 
                         for (i in userByLevel.indices) {
@@ -79,7 +79,7 @@ class AddContestActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<UserByLevelResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })

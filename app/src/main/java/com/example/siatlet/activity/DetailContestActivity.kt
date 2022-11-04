@@ -16,9 +16,9 @@ import com.example.siatlet.databinding.ActivityDetailContestBinding
 import com.example.siatlet.databinding.LayoutDialogBinding
 import com.example.siatlet.hawkstorage.HawkStorage
 import com.example.siatlet.model.ContestByIdResponse
-import com.example.siatlet.model.DataUserByLevel
+import com.example.siatlet.model.DataUser
 import com.example.siatlet.model.MetaResponse
-import com.example.siatlet.model.UserByLevelResponse
+import com.example.siatlet.model.UserResponse
 import com.example.siatlet.network.ApiConfig
 import com.example.siatlet.util.DialogUtil
 import retrofit2.Call
@@ -217,13 +217,13 @@ class DetailContestActivity : BaseActivity() {
 
     private fun setSpTrainer() {
         val client = ApiConfig.getApiService().getUserByLevel(level)
-        client.enqueue(object : Callback<UserByLevelResponse> {
-            override fun onResponse(call: Call<UserByLevelResponse>, response: Response<UserByLevelResponse>) {
+        client.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 val statusCode = response.body()?.meta?.code
 
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
-                        val userByLevel: List<DataUserByLevel> = response.body()!!.data as List<DataUserByLevel>
+                        val userByLevel: List<DataUser> = response.body()!!.data as List<DataUser>
                         val nameList: MutableList<String> = ArrayList()
 
                         for (i in userByLevel.indices) {
@@ -250,7 +250,7 @@ class DetailContestActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<UserByLevelResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 Log.e(AddContestActivity.TAG, "onFailure: ${t.message}")
             }
         })
