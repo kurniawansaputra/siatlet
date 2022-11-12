@@ -2,12 +2,40 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/containerAddUpdateUser"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/labelNumberRegistration"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/number_registration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editNumberRegistration"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_number_registration"
+            android:inputType="number"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/labelNumberRegistration"
+            app:layout_constraintStart_toStartOf="@+id/labelNumberRegistration"
+            app:layout_constraintTop_toBottomOf="@+id/labelNumberRegistration"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/labelName"
@@ -20,7 +48,7 @@
             android:text="@string/name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/editNumberRegistration" />
 
         <EditText
             android:id="@+id/editName"

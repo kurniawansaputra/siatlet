@@ -1,35 +1,33 @@
 package com.example.siatlet.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.siatlet.adapter.ParticipantAdapter
-import com.example.siatlet.databinding.ActivityParticipantBinding
+import com.example.siatlet.adapter.CriteriaByContestAdapter
+import com.example.siatlet.databinding.ActivityCriteriaByContestBinding
 import com.example.siatlet.hawkstorage.HawkStorage
-import com.example.siatlet.model.DataParticipant
-import com.example.siatlet.model.ParticipantResponse
+import com.example.siatlet.model.CriteriaResponse
+import com.example.siatlet.model.DataCriteria
 import com.example.siatlet.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ParticipantActivity : AppCompatActivity() {
+class CriteriaByContestActivity : AppCompatActivity() {
     private lateinit var token: String
     private lateinit var idContest: String
     private lateinit var nameContest: String
 
-    private lateinit var binding: ActivityParticipantBinding
+    private lateinit var binding: ActivityCriteriaByContestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityParticipantBinding.inflate(layoutInflater)
+        binding = ActivityCriteriaByContestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setPref()
         setToolbar()
-        setListener()
         setList()
     }
 
@@ -50,30 +48,19 @@ class ParticipantActivity : AppCompatActivity() {
         }
     }
 
-    private fun setListener() {
-        binding.apply {
-            fabAddParticipant.setOnClickListener {
-                val intent = Intent(this@ParticipantActivity, AddParticipantActivity::class.java)
-                intent.putExtra("id_contest", idContest)
-                intent.putExtra("name_contest", nameContest)
-                startActivity(intent)
-            }
-        }
-    }
-
     private fun setList() {
         setLoading(true)
-        val client = ApiConfig.getApiService().getParticipantByIdContest(token, idContest)
-        client.enqueue(object : Callback<ParticipantResponse> {
-            override fun onResponse(call: Call<ParticipantResponse>, response: Response<ParticipantResponse>) {
+        val client = ApiConfig.getApiService().getCriteriaByIdContest(token, idContest)
+        client.enqueue(object : Callback<CriteriaResponse> {
+            override fun onResponse(call: Call<CriteriaResponse>, response: Response<CriteriaResponse>) {
                 setLoading(false)
                 val statusCode = response.body()?.meta?.code
                 if (response.isSuccessful) {
                     if (statusCode == "200") {
                         val responseBody = response.body()
-                        val participantAdapter = ParticipantAdapter(responseBody?.data as ArrayList<DataParticipant>, this@ParticipantActivity)
-                        binding.rvParticipant.adapter = participantAdapter
-                        binding.rvParticipant.setHasFixedSize(true)
+                        val criteriaByContestAdapter = CriteriaByContestAdapter(responseBody?.data as ArrayList<DataCriteria>, this@CriteriaByContestActivity)
+                        binding.rvCriteria.adapter = criteriaByContestAdapter
+                        binding.rvCriteria.setHasFixedSize(true)
                     }
 
                 } else {
@@ -81,7 +68,7 @@ class ParticipantActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ParticipantResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CriteriaResponse>, t: Throwable) {
                 setLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
@@ -97,6 +84,6 @@ class ParticipantActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TAG = "Participant"
+        const val TAG = "Criteria"
     }
 }

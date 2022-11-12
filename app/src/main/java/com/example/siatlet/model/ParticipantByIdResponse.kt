@@ -2,25 +2,22 @@ package com.example.siatlet.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ParticipantResponse(
+data class ParticipantByIdResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataParticipant?>? = null,
+	val data: DataParticipantById? = null,
 
 	@field:SerializedName("meta")
 	val meta: Meta? = null
 )
 
-data class DataParticipant(
+data class DataParticipantById(
 
 	@field:SerializedName("tempat_lahir")
 	val tempatLahir: String? = null,
 
 	@field:SerializedName("pekerjaan")
 	val pekerjaan: String? = null,
-
-	@field:SerializedName("updated_at")
-	val updatedAt: Any? = null,
 
 	@field:SerializedName("id_peserta")
 	val idPeserta: String? = null,
@@ -37,8 +34,8 @@ data class DataParticipant(
 	@field:SerializedName("id_lomba")
 	val idLomba: String? = null,
 
-	@field:SerializedName("created_at")
-	val createdAt: String? = null,
+	@field:SerializedName("nama_lomba")
+	val namaLomba: String? = null,
 
 	@field:SerializedName("jenis_kelamin")
 	val jenisKelamin: String? = null,
@@ -47,8 +44,5 @@ data class DataParticipant(
 	val tanggalLahir: String? = null,
 
 	@field:SerializedName("alamat")
-	val alamat: String? = null,
-
-	@field:SerializedName("nama_lomba")
-	val namaLomba: String? = null
+	val alamat: String? = null
 )

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/labelGender"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/labelGender"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/labelGender"
+            app:layout_constraintTop_toBottomOf="@+id/labelGender">
+
+            <RadioButton
+                android:id="@+id/rbMale"
+                style="@style/TextView.PoppinsRegular14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male" />
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                style="@style/TextView.PoppinsRegular14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/female" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/labelValue"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/value"
+            app:layout_constraintEnd_toEndOf="@+id/rgGender"
+            app:layout_constraintStart_toStartOf="@+id/rgGender"
+            app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+
+        <EditText
+            android:id="@+id/editValue"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_value"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="@+id/labelValue"
+            app:layout_constraintStart_toStartOf="@+id/labelValue"
+            app:layout_constraintTop_toBottomOf="@+id/labelValue" />
+
+        <TextView
+            android:id="@+id/labelDesc"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/desc"
+            app:layout_constraintEnd_toEndOf="@+id/rgGender"
+            app:layout_constraintStart_toStartOf="@+id/rgGender"
+            app:layout_constraintTop_toBottomOf="@+id/editValue" />
+
+        <EditText
+            android:id="@+id/editDesc"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_desc"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@+id/labelDesc"
+            app:layout_constraintStart_toStartOf="@+id/labelDesc"
+            app:layout_constraintTop_toBottomOf="@+id/labelDesc" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddUpdate"
+            style="@style/Button.Primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/add"
+            app:layout_constraintEnd_toEndOf="@+id/editDesc"
+            app:layout_constraintStart_toStartOf="@+id/editDesc"
+            app:layout_constraintTop_toBottomOf="@+id/editDesc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

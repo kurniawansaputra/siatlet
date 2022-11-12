@@ -160,6 +160,50 @@ interface ApiService {
     ): Call<ParticipantResponse>
 
     @FormUrlEncoded
+    @POST("api/peserta/add")
+    fun addParticipant (
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String,
+        @Field("nama_peserta") name: String,
+        @Field("tempat_lahir") placeOfBirth: String,
+        @Field("tanggal_lahir") dateOfBirth: String,
+        @Field("jenis_kelamin") gender: String,
+        @Field("berat_badan") weight: String,
+        @Field("alamat") address: String,
+        @Field("pekerjaan") occupation: String,
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/peserta/update")
+    fun updateParticipant (
+        @Field("token") token: String,
+        @Field("id_peserta") idParticipant: String,
+        @Field("id_lomba") idContest: String,
+        @Field("no_reg") numberRegistration: String,
+        @Field("nama_peserta") name: String,
+        @Field("tempat_lahir") placeOfBirth: String,
+        @Field("tanggal_lahir") dateOfBirth: String,
+        @Field("jenis_kelamin") gender: String,
+        @Field("berat_badan") weight: String,
+        @Field("alamat") address: String,
+        @Field("pekerjaan") occupation: String,
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/peserta/get_by_id")
+    fun getParticipantById (
+        @Field("token") token: String,
+        @Field("id_peserta") idParticipant: String
+    ): Call<ParticipantByIdResponse>
+
+    @FormUrlEncoded
+    @POST("api/peserta/delete")
+    fun deleteParticipant(
+        @Field("token") token: String,
+        @Field("id_peserta") idParticipant: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
     @POST("api/peserta/peserta_by_lomba")
     fun getParticipantByIdContest (
         @Field("token") token: String,
@@ -205,7 +249,7 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("api/kriteria/get_by_id_lomba")
-    fun getCriteriatByIdContest(
+    fun getCriteriaByIdContest(
         @Field("token") token: String,
         @Field("id_lomba") idContest: String
     ): Call<CriteriaResponse>
@@ -218,5 +262,47 @@ interface ApiService {
         @Field("id_lomba") idContest: String,
         @Field("id_kriteria") idCriteria: String,
         @Field("bobot") weight: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaikriteria/get_by_id_kriteria")
+    fun getCriteriaValueByIdCriteria(
+        @Field("token") token: String,
+        @Field("id_kriteria") idCriteria: String
+    ): Call<CriteriaValueByIdCriteriaResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaikriteria/add")
+    fun addCriteriaValue (
+        @Field("token") token: String,
+        @Field("id_kriteria") idCriteria: String,
+        @Field("jenis_kelamin") gender: String,
+        @Field("nilai") value: String,
+        @Field("keterangan") desc: String,
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaikriteria/get_by_id")
+    fun getCriteriaValueById(
+        @Field("token") token: String,
+        @Field("id_nilai_kriteria") idCriteriaValue: String
+    ): Call<CriteriaValueByIdResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaikriteria/delete")
+    fun deleteCriteriaValue(
+        @Field("token") token: String,
+        @Field("id_nilai_kriteria") idCriteriaValue: String
+    ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaikriteria/update")
+    fun updateCriteriaValue (
+        @Field("token") token: String,
+        @Field("id_nilai_kriteria") idCriteriaValue: String,
+        @Field("id_kriteria") idCriteria: String,
+        @Field("jenis_kelamin") gender: String,
+        @Field("nilai") value: String,
+        @Field("keterangan") desc: String
     ): Call<MetaResponse>
 }

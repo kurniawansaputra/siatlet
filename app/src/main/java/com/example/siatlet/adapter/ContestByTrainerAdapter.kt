@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.siatlet.activity.CriteriaByContestActivity
 import com.example.siatlet.databinding.ItemRowContestByTrainerBinding
 import com.example.siatlet.databinding.LayoutDialogContestBinding
 import com.example.siatlet.model.DataContest
@@ -56,7 +57,11 @@ class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest
                             }
 
                             labelCriteriaValue.setOnClickListener {
-
+                                val intent = Intent(context, CriteriaByContestActivity::class.java)
+                                intent.putExtra("id_contest", idContest)
+                                intent.putExtra("name_contest", name)
+                                context.startActivity(intent)
+                                dialog.dismiss()
                             }
 
                             labelBack.setOnClickListener {
