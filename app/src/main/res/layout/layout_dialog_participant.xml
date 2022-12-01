@@ -16,37 +16,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/labelParticipant"
+            android:id="@+id/labelDetailParticipant"
             style="@style/TextView.PoppinsRegular14spBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="12dp"
-            android:text="@string/participant"
-            app:layout_constraintEnd_toEndOf="@+id/labelCriteriaValue"
-            app:layout_constraintStart_toStartOf="@+id/labelCriteriaValue"
-            app:layout_constraintTop_toBottomOf="@+id/labelCriteriaValue" />
-
-        <TextView
-            android:id="@+id/labelCriteriaWeight"
-            style="@style/TextView.PoppinsRegular14spBlack"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
-            android:text="@string/criteria_weight"
+            android:text="@string/detail_participant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/labelCriteriaValue"
+            android:id="@+id/labelParticipantValue"
             style="@style/TextView.PoppinsRegular14spBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="12dp"
-            android:text="@string/criteria_value"
-            app:layout_constraintEnd_toEndOf="@+id/labelCriteriaWeight"
-            app:layout_constraintStart_toStartOf="@+id/labelCriteriaWeight"
-            app:layout_constraintTop_toBottomOf="@+id/labelCriteriaWeight" />
+            android:text="@string/participant_value"
+            app:layout_constraintEnd_toEndOf="@+id/labelDetailParticipant"
+            app:layout_constraintStart_toStartOf="@+id/labelDetailParticipant"
+            app:layout_constraintTop_toBottomOf="@+id/labelDetailParticipant" />
 
         <TextView
             android:id="@+id/labelBack"
@@ -56,9 +45,9 @@
             android:gravity="center"
             android:paddingVertical="12dp"
             android:text="@string/back"
-            app:layout_constraintEnd_toEndOf="@+id/labelParticipant"
-            app:layout_constraintStart_toStartOf="@+id/labelParticipant"
-            app:layout_constraintTop_toBottomOf="@+id/labelParticipant" />
+            app:layout_constraintEnd_toEndOf="@+id/labelParticipantValue"
+            app:layout_constraintStart_toStartOf="@+id/labelParticipantValue"
+            app:layout_constraintTop_toBottomOf="@+id/labelParticipantValue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

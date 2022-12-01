@@ -305,4 +305,11 @@ interface ApiService {
         @Field("nilai") value: String,
         @Field("keterangan") desc: String
     ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/nilaipeserta/by_peserta")
+    fun getParticipantValueById(
+        @Field("token") token: String,
+        @Field("id_peserta") idParticipant: String
+    ): Call<ParticipantValueByIdResponse>
 }

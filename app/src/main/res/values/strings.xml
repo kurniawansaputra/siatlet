@@ -41,4 +41,6 @@
     <string name="input_value">Masukan nilai</string>
     <string name="desc">Keterangan</string>
     <string name="input_desc">Masukan keterangan</string>
+    <string name="participant_value">Nilai Peserta</string>
+    <string name="detail_participant">Detail Peserta</string>
 </resources>
