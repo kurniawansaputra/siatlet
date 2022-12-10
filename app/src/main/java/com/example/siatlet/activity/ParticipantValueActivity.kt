@@ -1,5 +1,6 @@
 package com.example.siatlet.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,7 +9,7 @@ import com.example.siatlet.adapter.ParticipantValueAdapter
 import com.example.siatlet.databinding.ActivityParticipantValueBinding
 import com.example.siatlet.hawkstorage.HawkStorage
 import com.example.siatlet.model.DataParticipantValue
-import com.example.siatlet.model.ParticipantValueByIdResponse
+import com.example.siatlet.model.DataParticipantValueByIdResponse
 import com.example.siatlet.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +32,7 @@ class ParticipantValueActivity : AppCompatActivity() {
         setPref()
         setToolbar()
         setList()
+        setListener()
     }
 
     private fun setPref() {
@@ -39,7 +41,7 @@ class ParticipantValueActivity : AppCompatActivity() {
 
         idContest = intent.getStringExtra("id_contest").toString()
         nameContest = intent.getStringExtra("name_contest").toString()
-        name = intent.getStringExtra("name").toString()
+        name = intent.getStringExtra("name_participant").toString()
         idParticipant = intent.getStringExtra("id_participant").toString()
     }
 
@@ -48,16 +50,16 @@ class ParticipantValueActivity : AppCompatActivity() {
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
-            toolbar.title = "Nilai Peserta - $name"
+            toolbar.title = "Daftar Nilai Peserta - $name"
             toolbar.subtitle = nameContest
         }
     }
 
     private fun setList() {
         setLoading(true)
-        val client = ApiConfig.getApiService().getParticipantValueById(token, idParticipant)
-        client.enqueue(object : Callback<ParticipantValueByIdResponse> {
-            override fun onResponse(call: Call<ParticipantValueByIdResponse>, response: Response<ParticipantValueByIdResponse>) {
+        val client = ApiConfig.getApiService().getDataParticipantValueById(token, idParticipant)
+        client.enqueue(object : Callback<DataParticipantValueByIdResponse> {
+            override fun onResponse(call: Call<DataParticipantValueByIdResponse>, response: Response<DataParticipantValueByIdResponse>) {
                 setLoading(false)
                 val statusCode = response.body()?.meta?.code
                 if (response.isSuccessful) {
@@ -73,11 +75,24 @@ class ParticipantValueActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ParticipantValueByIdResponse>, t: Throwable) {
+            override fun onFailure(call: Call<DataParticipantValueByIdResponse>, t: Throwable) {
                 setLoading(false)
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
+    }
+
+    private fun setListener() {
+        binding.apply {
+            fabAddParticipantValue.setOnClickListener {
+                val intent = Intent(this@ParticipantValueActivity, AddParticipantValueActivity::class.java)
+                intent.putExtra("id_contest", idContest)
+                intent.putExtra("name_contest", nameContest)
+                intent.putExtra("id_participant", idParticipant)
+                intent.putExtra("name_participant", name)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setLoading(condition: Boolean) {

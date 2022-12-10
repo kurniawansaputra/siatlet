@@ -65,7 +65,7 @@ class ParticipantAdapter(private var participantList: List<DataParticipant>, pri
                                 intent.putExtra("id_participant", idParticipant)
                                 intent.putExtra("id_contest", idContest)
                                 intent.putExtra("name_contest", nameContest)
-                                intent.putExtra("name", name)
+                                intent.putExtra("name_participant", name)
                                 context.startActivity(intent)
                                 dialog.dismiss()
                             }
@@ -77,7 +77,6 @@ class ParticipantAdapter(private var participantList: List<DataParticipant>, pri
                         dialog.setCancelable(true)
                         dialog.show()
                         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
                     }
                 }
             }

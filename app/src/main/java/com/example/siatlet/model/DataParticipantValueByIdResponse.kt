@@ -2,16 +2,16 @@ package com.example.siatlet.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ParticipantValueByIdResponse(
+data class DataParticipantValueByIdResponse(
 
 	@field:SerializedName("data")
-	val data: ParticipantValue? = null,
+	val data: List<DataParticipantValue?>? = null,
 
 	@field:SerializedName("meta")
 	val meta: Meta? = null
 )
 
-data class ParticipantValue(
+data class DataParticipantValue(
 
 	@field:SerializedName("id_peserta")
 	val idPeserta: String? = null,
