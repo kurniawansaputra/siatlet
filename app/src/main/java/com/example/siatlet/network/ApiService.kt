@@ -347,4 +347,12 @@ interface ApiService {
         @Field("id_kriteria") idCriteria: String,
         @Field("id_nilai_kriteria") idCriteriaValue: String
     ): Call<MetaResponse>
+
+    @FormUrlEncoded
+    @POST("api/hasil/ranking")
+    fun participantRanking(
+        @Field("token") token: String,
+        @Field("id_lomba") idContest: String,
+        @Field("jenis_kelamin") gender: String
+    ): Call<ParticipantRankingResponse>
 }

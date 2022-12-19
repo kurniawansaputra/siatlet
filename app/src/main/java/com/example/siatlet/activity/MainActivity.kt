@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             when (level) {
                 "admin" -> {
                     containerContestByTrainer.cardMenu.visibility = View.GONE
-                    containerScore.cardMenu.visibility = View.GONE
+//                    containerScore.cardMenu.visibility = View.GONE
                 }
                 "pelatih" -> {
                     containerUser.cardMenu.visibility = View.GONE
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     containerCriteria.cardMenu.visibility = View.GONE
                 }
                 "pemilik" -> {
-                    containerScore.cardMenu.visibility = View.GONE
+//                    containerScore.cardMenu.visibility = View.GONE
                     containerUser.cardMenu.visibility = View.GONE
                     containerContest.cardMenu.visibility = View.GONE
                     containerCriteria.cardMenu.visibility = View.GONE
@@ -64,11 +64,11 @@ class MainActivity : AppCompatActivity() {
             containerCriteria.labelTitle.text = "Kriteria"
             containerCriteria.ivIcon.setImageResource(R.drawable.ic_criteria)
 
-            containerScore.labelTitle.text = "Nilai Peserta"
-            containerScore.ivIcon.setImageResource(R.drawable.ic_score)
-
-            containerRanking.labelTitle.text = "Perankingan"
-            containerRanking.ivIcon.setImageResource(R.drawable.ic_ranking)
+//            containerScore.labelTitle.text = "Nilai Peserta"
+//            containerScore.ivIcon.setImageResource(R.drawable.ic_score)
+//
+//            containerRanking.labelTitle.text = "Perankingan"
+//            containerRanking.ivIcon.setImageResource(R.drawable.ic_ranking)
         }
     }
 

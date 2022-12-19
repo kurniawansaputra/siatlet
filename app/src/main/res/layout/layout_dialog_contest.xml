@@ -49,6 +49,17 @@
             app:layout_constraintTop_toBottomOf="@+id/labelCriteriaWeight" />
 
         <TextView
+            android:id="@+id/labelRanked"
+            style="@style/TextView.PoppinsRegular14spBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:text="Perankingan"
+            app:layout_constraintEnd_toEndOf="@+id/labelCriteriaWeight"
+            app:layout_constraintStart_toStartOf="@+id/labelCriteriaWeight"
+            app:layout_constraintTop_toBottomOf="@+id/labelParticipant" />
+
+        <TextView
             android:id="@+id/labelBack"
             style="@style/TextView.PoppinsMedium14spBlack"
             android:layout_width="0dp"
@@ -58,7 +69,7 @@
             android:text="@string/back"
             app:layout_constraintEnd_toEndOf="@+id/labelParticipant"
             app:layout_constraintStart_toStartOf="@+id/labelParticipant"
-            app:layout_constraintTop_toBottomOf="@+id/labelParticipant" />
+            app:layout_constraintTop_toBottomOf="@+id/labelRanked" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

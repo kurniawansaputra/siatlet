@@ -8,12 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.siatlet.activity.CriteriaByContestActivity
+import com.example.siatlet.activity.*
 import com.example.siatlet.databinding.ItemRowContestByTrainerBinding
 import com.example.siatlet.databinding.LayoutDialogContestBinding
 import com.example.siatlet.model.DataContest
-import com.example.siatlet.activity.CriteriaWeightActivity
-import com.example.siatlet.activity.ParticipantActivity
 
 class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest>, private val context: Context): RecyclerView.Adapter<ContestByTrainerAdapter.ViewHolder>() {
     class ViewHolder (val binding: ItemRowContestByTrainerBinding) : RecyclerView.ViewHolder(binding.root)
@@ -58,6 +56,14 @@ class ContestByTrainerAdapter(private var contestByTrainerList: List<DataContest
 
                             labelCriteriaValue.setOnClickListener {
                                 val intent = Intent(context, CriteriaByContestActivity::class.java)
+                                intent.putExtra("id_contest", idContest)
+                                intent.putExtra("name_contest", name)
+                                context.startActivity(intent)
+                                dialog.dismiss()
+                            }
+
+                            labelRanked.setOnClickListener {
+                                val intent = Intent(context, RankedActivity::class.java)
                                 intent.putExtra("id_contest", idContest)
                                 intent.putExtra("name_contest", name)
                                 context.startActivity(intent)
