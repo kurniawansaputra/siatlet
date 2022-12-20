@@ -32,8 +32,8 @@ class RankedActivity : AppCompatActivity() {
         setPref()
         setToolbar()
         setGender()
-        setList()
-        Log.d("gender", gender)
+        setListener()
+
     }
 
     private fun init() {
@@ -54,6 +54,14 @@ class RankedActivity : AppCompatActivity() {
                 onBackPressed()
             }
             toolbar.subtitle = nameContest
+        }
+    }
+
+    private fun setListener() {
+        binding.apply {
+            buttonShow.setOnClickListener{
+                setList()
+            }
         }
     }
 
@@ -98,6 +106,7 @@ class RankedActivity : AppCompatActivity() {
                 }
             }
         }
+        Log.d("gender", gender)
     }
 
     private fun setLoading(condition: Boolean) {
